@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
     <bean id="shiroEhCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="/WEB-INF/config/ehcache.xml"/>
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
     </bean>
     <bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
         <property name="usernameParam" value="loginname"/>
@@ -20,6 +20,7 @@
     </bean>
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="cacheManager" ref="shiroEhCacheManager"/>
+        <property name="realm" ref="v5Realm"/>
     </bean>
     <bean id="v5Realm" class="cn.v5cn.basicframework.shiro.V5Realm">
         <property name="credentialsMatcher">
@@ -33,7 +34,7 @@
     </bean>
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="successUrl" value="/"/>
+        <property name="successUrl" value="/index"/>
         <property name="loginUrl" value="/login"/>
         <property name="unauthorizedUrl" value="/login"/>
         <property name="filters">

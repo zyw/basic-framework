@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mosaddek">
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.html">
+    <%--<link rel="shortcut icon" href="img/favicon.html">--%>
 
     <title>登录</title>
     <!-- Bootstrap core CSS -->
@@ -41,10 +42,10 @@
 
 <div class="container">
 
-    <form class="form-signin" method="post" action="">
+    <form class="form-signin" method="post" action="<c:url value="/login"/>">
         <h2 class="form-signin-heading">用户登录</h2>
         <div class="login-wrap">
-            <input type="text" class="form-control" name="loginname" placeholder="用户名" autofocus>
+            <input type="text" class="form-control" name="loginname" value="<shiro:principal/>" placeholder="用户名" autofocus>
             <input type="password" class="form-control" name="password" placeholder="密码">
             <label class="checkbox">
                 <input type="checkbox" value="remember-me" name="rememberMe"> 记住密码
@@ -54,8 +55,8 @@
                 </span>
             </label>
             <button class="btn btn-lg btn-login btn-block" type="submit">登&nbsp;&nbsp;录</button>
-            <p>or you can sign in via social network</p>
-            <div class="login-social-link">
+            <p style="color:#ff0000">${error}</p>
+            <%--<div class="login-social-link">
                 <a href="index.html" class="facebook">
                     <i class="fa fa-facebook"></i>
                     Facebook
@@ -70,7 +71,7 @@
                 <a class="" href="registration.html">
                     Create an account
                 </a>
-            </div>
+            </div>--%>
 
         </div>
 
@@ -80,16 +81,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title">Forgot Password ?</h4>
+                        <h4 class="modal-title">忘记密码？</h4>
                     </div>
                     <div class="modal-body">
-                        <p>Enter your e-mail address below to reset your password.</p>
+                        <p>下面输入您的电子邮件地址重新设置您的密码。</p>
                         <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix">
 
                     </div>
                     <div class="modal-footer">
-                        <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                        <button class="btn btn-success" type="button">Submit</button>
+                        <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                        <button class="btn btn-success" type="button">确定</button>
                     </div>
                 </div>
             </div>
