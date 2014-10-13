@@ -175,6 +175,7 @@
 <script src="<c:url value='/r/js/slidebars.min.js'/>"></script>
 <script src="<c:url value='/r/js/jquery.nicescroll.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/jquery.treetable.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/r/js/chosen.jquery.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/respond.min.js'/>" ></script>
 
 <!--common script for all pages-->

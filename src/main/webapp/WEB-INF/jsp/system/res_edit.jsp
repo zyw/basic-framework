@@ -79,15 +79,11 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2">状态</label>
                             <div class="col-lg-10">
-                                <label class="checkbox-inline">
-                                    <label class="radio" style="display: inline;margin-right: 10px;">
-                                        <input type="radio" name="available" value="1" data-toggle="radio" checked>
-                                        可用
-                                    </label>
-                                    <label class="radio" style="display: inline;">
-                                        <input type="radio" name="available" value="0" data-toggle="radio">
-                                        禁用
-                                    </label>
+                                <label class="checkbox-inline" style="padding-left:0;">
+                                    <input type="radio" name="available" value="1" id="available1" checked>
+                                    <label for="available1">可用</label>
+                                    <input type="radio" name="available" value="0" id="available0">
+                                    <label for="available0">禁用</label>
                                 </label>
 
                             </div>
@@ -113,3 +109,12 @@
     </div>
 </div>
 <c:import url="../fragment/footer.jsp"/>
+<script type="text/javascript">
+    $(function(){
+        $(":radio").iCheck({
+            checkboxClass: 'icheckbox_flat-red',
+            radioClass: 'iradio_flat-red'
+        });
+        $("#rtype").chosen();
+    })
+</script>
