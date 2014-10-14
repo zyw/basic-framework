@@ -33,12 +33,12 @@
             </header>
             <div class="panel-body">
                 <div class=" form">
-                    <form action="#" method="get" id="commentForm" class="cmxform form-horizontal tasi-form" novalidate="novalidate">
+                    <form action="<c:url value="/res/edit"/>" method="post" id="ResForm" class="cmxform form-horizontal tasi-form" novalidate="novalidate">
                         <div class="form-group ">
                             <label class="control-label col-lg-2">父资源</label>
                             <div class="col-lg-10">
-                                <%--<input type="text" required="" minlength="2" name="name" id="cname" class=" form-control">--%>
-                                <label class="control-label">父资源</label>
+                                <input type="hidden" name="pid" id="pid" value="${res.pid}">
+                                <label class="control-label">${pname}</label>
                             </div>
                         </div>
                         <div class="form-group ">
@@ -50,20 +50,20 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="rurl">URL</label>
                             <div class="col-lg-10">
-                                <input type="text" required name="url" id="rurl" class="form-control" placeholder="URL">
+                                <input type="text" name="url" id="rurl" class="form-control" placeholder="URL">
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="permission">权限字符串</label>
                             <div class="col-lg-10">
-                                <input type="text" required name="permission" id="permission" class="form-control" placeholder="例如：res:*">
+                                <input type="text" name="permission" id="permission" class="form-control" placeholder="例如：res:*">
                                 <span class="help-block">以资源为例 res:* 全部权限 res:view，res:create，res:update，res:delete</span>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="rurl">序号</label>
                             <div class="col-lg-10">
-                                <input type="text" required name="seq" id="seq" class="form-control" placeholder="序号">
+                                <input type="text" name="seq" id="seq" class="form-control" placeholder="序号">
                                 <span class="help-block">对资源进行排序，越小越靠前。</span>
                             </div>
                         </div>
@@ -115,6 +115,15 @@
             checkboxClass: 'icheckbox_flat-red',
             radioClass: 'iradio_flat-red'
         });
-        $("#rtype").chosen();
+        $("#rtype").chosen({disable_search_threshold: 10});
+        $("#ResForm").ajaxForm({
+            dataType:'json',
+            success:function(responseText,statusText,xhr,element){
+
+            },
+            error:function(xhr, status, error){
+
+            }
+        });
     })
 </script>

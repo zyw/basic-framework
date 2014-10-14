@@ -66,7 +66,7 @@
     $(function(){
         $("#example-basic").treetable({ expandable: true });
         $("#editRes").click(function(){
-            location.href="<c:url value="/res/edit"/>";
+            location.href="<c:url value="/res/edit/0"/>";
         })
     })
 </script>
