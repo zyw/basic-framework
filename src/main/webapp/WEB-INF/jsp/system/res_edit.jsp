@@ -32,8 +32,8 @@
                 </span>--%>
             </header>
             <div class="panel-body">
-                <div class=" form">
-                    <form action="<c:url value="/res/edit"/>" method="post" id="ResForm" class="cmxform form-horizontal tasi-form" novalidate="novalidate">
+                <div class="form">
+                    <form action="<c:url value="/res/edit"/>" method="post" id="resForm" class="cmxform form-horizontal tasi-form">
                         <div class="form-group ">
                             <label class="control-label col-lg-2">父资源</label>
                             <div class="col-lg-10">
@@ -44,13 +44,13 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="rname">名&nbsp;&nbsp;称</label>
                             <div class="col-lg-10">
-                                <input type="text" required name="name" id="rname" class="form-control" placeholder="名称">
+                                <input type="text" name="name" id="rname" class="form-control" placeholder="名称" required>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="rurl">URL</label>
                             <div class="col-lg-10">
-                                <input type="text" name="url" id="rurl" class="form-control" placeholder="URL">
+                                <input type="text" name="url" id="rurl" class="form-control" placeholder='请以"/"开头'>
                             </div>
                         </div>
                         <div class="form-group ">
@@ -61,9 +61,9 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="control-label col-lg-2" for="rurl">序号</label>
+                            <label class="control-label col-lg-2" for="sortNum">序号</label>
                             <div class="col-lg-10">
-                                <input type="text" name="seq" id="seq" class="form-control" placeholder="序号">
+                                <input type="text" name="sortNum" id="sortNum" class="form-control" placeholder="序号">
                                 <span class="help-block">对资源进行排序，越小越靠前。</span>
                             </div>
                         </div>
@@ -91,7 +91,7 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="des">描述</label>
                             <div class="col-lg-10">
-                                <textarea name="des" id="des" class="form-control "></textarea>
+                                <textarea name="des" id="des" class="form-control"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -116,13 +116,20 @@
             radioClass: 'iradio_flat-red'
         });
         $("#rtype").chosen({disable_search_threshold: 10});
-        $("#ResForm").ajaxForm({
+        $("#resForm").ajaxForm({
             dataType:'json',
             success:function(responseText,statusText,xhr,element){
-
+                if(responseText.status){
+                    toastr.success(responseText.message);
+                    setTimeout(function(){
+                        location.href="<c:url value="/res/list"/>";
+                    },1000);
+                    return;
+                }
+                toastr.error(responseText.message);
             },
             error:function(xhr, status, error){
-
+                toastr.error("错误代码："+status+" 错误消息："+error);
             }
         });
     })

@@ -13,10 +13,10 @@ public class SystemUser implements Serializable {
     private String name;
     private String email;
     private String mobilephone; //移动电话
-    private int loginCount;         //登录次数
+    private Integer loginCount;         //登录次数
     private String lastLoginTime;    //最后登录时间',
     private String originalPic;      //头像',
-    private int status;             //#1 不在线 2.封号状态 ',
+    private Integer status;             //#1 不在线 2.封号状态 ',
 
     public Long getId() {
         return id;
@@ -74,11 +74,11 @@ public class SystemUser implements Serializable {
         this.mobilephone = mobilephone;
     }
 
-    public int getLoginCount() {
+    public Integer getLoginCount() {
         return loginCount;
     }
 
-    public void setLoginCount(int loginCount) {
+    public void setLoginCount(Integer loginCount) {
         this.loginCount = loginCount;
     }
 
@@ -98,11 +98,11 @@ public class SystemUser implements Serializable {
         this.originalPic = originalPic;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

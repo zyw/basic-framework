@@ -178,6 +178,7 @@
 <script src="<c:url value='/r/js/chosen.jquery.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/jquery.form.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/toastr.min.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/r/js/jquery.validate.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/respond.min.js'/>" ></script>
 
 <!--common script for all pages-->

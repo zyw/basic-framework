@@ -4,7 +4,7 @@ CREATE TABLE system_res (
   NAME VARCHAR(111) DEFAULT NULL,
    permission VARCHAR(100),
   url VARCHAR(255) DEFAULT NULL,
-  seq INT(11) DEFAULT '1',		/*排序*/
+  sortNum INT(11) DEFAULT '1',		/*排序*/
   TYPE INT(1) DEFAULT '2' COMMENT '1 菜单 2 按钮',
    available INT DEFAULT 1 COMMENT '1 可用 0 不可用',
   des VARCHAR(255) DEFAULT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE system_res (
 CREATE TABLE system_role (
   id BIGINT NOT NULL AUTO_INCREMENT,
   NAME VARCHAR(55) DEFAULT NULL,
-  seq INT(11) DEFAULT '1',
+  sortNum INT(11) DEFAULT '1',
   pid INT(11) DEFAULT '0',
   des VARCHAR(55) DEFAULT NULL,
   available INT DEFAULT 1 COMMENT '1 可用 0 不可用',

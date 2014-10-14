@@ -11,9 +11,9 @@ public class SystemRes implements Serializable {
     private String name;
     private String permission;
     private String url;
-    private int seq;        /*排序*/
-    private int type;       //1 菜单 2 按钮
-    private int available;  //1 可用 0 不可用
+    private Integer sortNum;        /*排序*/
+    private Integer type;       //1 菜单 2 按钮
+    private Integer available;  //1 可用 0 不可用
     private String des;
 
     public Long getId() {
@@ -56,27 +56,27 @@ public class SystemRes implements Serializable {
         this.url = url;
     }
 
-    public int getSeq() {
-        return seq;
+    public Integer getSortNum() {
+        return sortNum;
     }
 
-    public void setSeq(int seq) {
-        this.seq = seq;
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
-    public int getAvailable() {
+    public Integer getAvailable() {
         return available;
     }
 
-    public void setAvailable(int available) {
+    public void setAvailable(Integer available) {
         this.available = available;
     }
 
@@ -96,7 +96,7 @@ public class SystemRes implements Serializable {
                 ", name='" + name + '\'' +
                 ", permission='" + permission + '\'' +
                 ", url='" + url + '\'' +
-                ", seq=" + seq +
+                ", sortNum=" + sortNum +
                 ", type=" + type +
                 ", available=" + available +
                 ", des='" + des + '\'' +
