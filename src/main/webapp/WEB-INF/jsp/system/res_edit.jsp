@@ -136,8 +136,5 @@
                 })
             }
         });
-/*        $("#resForm").ajaxForm({
-
-        });*/
     })
 </script>
