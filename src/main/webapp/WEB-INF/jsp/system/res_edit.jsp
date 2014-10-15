@@ -38,7 +38,7 @@
                             <label class="control-label col-lg-2">父资源</label>
                             <div class="col-lg-10">
                                 <input type="hidden" name="pid" id="pid" value="${res.pid}">
-                                <label class="control-label">${pname}</label>
+                                <label class="control-label">${res.name}</label>
                             </div>
                         </div>
                         <div class="form-group ">
@@ -116,21 +116,28 @@
             radioClass: 'iradio_flat-red'
         });
         $("#rtype").chosen({disable_search_threshold: 10});
-        $("#resForm").ajaxForm({
-            dataType:'json',
-            success:function(responseText,statusText,xhr,element){
-                if(responseText.status){
-                    toastr.success(responseText.message);
-                    setTimeout(function(){
-                        location.href="<c:url value="/res/list"/>";
-                    },1000);
-                    return;
-                }
-                toastr.error(responseText.message);
-            },
-            error:function(xhr, status, error){
-                toastr.error("错误代码："+status+" 错误消息："+error);
+        $("#resForm").validate({
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    dataType:'json',
+                    success:function(responseText,statusText,xhr,element){
+                        if(responseText.status){
+                            toastr.success(responseText.message);
+                            setTimeout(function(){
+                                location.href="<c:url value="/res/list"/>";
+                            },1000);
+                            return;
+                        }
+                        toastr.error(responseText.message);
+                    },
+                    error:function(xhr, status, error){
+                        toastr.error("错误代码："+status+" 错误消息："+error);
+                    }
+                })
             }
         });
+/*        $("#resForm").ajaxForm({
+
+        });*/
     })
 </script>

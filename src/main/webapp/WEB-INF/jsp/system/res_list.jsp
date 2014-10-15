@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 
 <c:import url="../fragment/header.jsp"/>
 <div class="row">
@@ -34,27 +35,31 @@
                 <table id="example-basic" class="table-striped table-advance table-hover">
                     <thead>
                     <tr>
-                        <th>Tree column</th>
-                        <th>Additional data</th>
+                        <th>名称</th>
+                        <th>类型</th>
+                        <th>URL</th>
+                        <th>权限字符串</th>
+                        <th>状态</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr data-tt-id="1">
-                        <td>Node 1: Click on the icon in front of me to expand this branch.</td>
-                        <td>I live in the second column.</td>
-                    </tr>
-                    <tr data-tt-id="1.1" data-tt-parent-id="1">
-                        <td>Node 1.1: Look, I am a table row <em>and</em> I am part of a tree!</td>
-                        <td>Interesting.</td>
-                    </tr>
-                    <tr data-tt-id="1.1.1" data-tt-parent-id="1.1">
-                        <td>Node 1.1.1: I am part of the tree too!</td>
-                        <td>That's it!</td>
-                    </tr>
-                    <tr data-tt-id="2">
-                        <td>Node 2: I am another root node, but without children</td>
-                        <td>Hurray!</td>
-                    </tr>
+                        <c:forEach items="${reses}" var="res">
+                            <tr data-tt-id="${res.id }" <c:if test="${res.pid ne 0 }">data-tt-parent-id="${res.pid }"</c:if>>
+                                <td>${res.name}</td>
+                                <td>${res.type==1?"菜单":"按钮"}</td>
+                                <td>${res.url}</td>
+                                <td>${res.permission}</td>
+                                <td>${res.available==1?"可用":"禁用"}</td>
+                                <td>
+                                    <c:if test="${res.type ne 2}">
+                                        <a href="<c:url value="/res/edit/"/>${res.id}">添加资源</a>
+                                    </c:if>
+                                    <a href="#">修改</a>
+                                    <a href="#">删除</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>

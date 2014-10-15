@@ -84,13 +84,15 @@ v5Util.countUp(328,'count3');
 v5Util.countUp(10328,'count4');
 var Script = function () {
 
-    $.validator.setDefaults({
-        submitHandler: function() { alert("submitted!"); }
-    });
+//    $.validator.setDefaults({
+//        submitHandler: function(form) {
+//            form.submit();
+//        }
+//    });
 
     $().ready(function() {
         // validate the comment form when it is submitted
-        $("#resForm").validate();
+
 
         // validate signup form on keyup and submit
 //        $("#signupForm").validate({

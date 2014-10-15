@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.v5cn.basicframework.dao.SystemResDao">
+    <!--<select id="findByUserName" resultType="SystemUser">
+        select * from system_user where loginname=#{userName}
+    </select>-->
+    <select id="findById" resultType="SystemRes">
+        select * from system_res where id=#{resId}
+    </select>
+    <select id="findAll" resultType="SystemRes">
+        select * from system_res order by concat(pid,id) asc
+    </select>
+    <insert id="addSystemRes">
+        insert into system_res(pid, name,type, url, permission, sortNum, available,des)
+        values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{available},#{des})
+    </insert>
+</mapper>

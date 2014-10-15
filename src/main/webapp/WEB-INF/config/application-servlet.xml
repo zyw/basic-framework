@@ -51,8 +51,8 @@
         <property name="defaultEncoding" value="UTF-8"/>
         <property name="alwaysUseMessageFormat" value="true"/>
     </bean>
-    <!-- 在代码中使用国际化的自定义类
-    <bean id="messageSourceHelper" class="com.itsinic.gs.util.MessageSourceHelper">
+    <!-- 在代码中使用国际化的自定义类-->
+    <bean id="messageSourceHelper" class="cn.v5cn.basicframework.util.MessageSourceHelper">
         <property name="messageSource" ref="messageSource"/>
-    </bean>-->
+    </bean>
 </beans>
