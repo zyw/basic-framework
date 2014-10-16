@@ -23,6 +23,16 @@ public class SystemResServiceImpl implements SystemResService {
     }
 
     @Override
+    public Long updateSystemRes(SystemRes systemRes) {
+        return systemResDao.updateSystemRes(systemRes);
+    }
+
+    @Override
+    public Long deleteSystemRes(Long resId) {
+        return systemResDao.deleteSystemRes(resId);
+    }
+
+    @Override
     public List<SystemRes> findAll() {
         return systemResDao.findAll();
     }
@@ -30,5 +40,10 @@ public class SystemResServiceImpl implements SystemResService {
     @Override
     public SystemRes findById(Long resId) {
         return systemResDao.findById(resId);
+    }
+
+    @Override
+    public int findByPidCount(Long pid) {
+        return systemResDao.findByPidCount(pid);
     }
 }

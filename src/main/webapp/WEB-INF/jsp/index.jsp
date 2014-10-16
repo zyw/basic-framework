@@ -66,4 +66,8 @@
 </div>
 <!--state overview end-->
 <c:import url="fragment/footer.jsp"/>
-
+<script type="text/javascript">
+    $(function(){
+        v5Util.activeNav("dashboard");
+    });
+</script>

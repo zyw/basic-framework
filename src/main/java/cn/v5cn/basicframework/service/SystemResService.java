@@ -9,6 +9,9 @@ import java.util.List;
  */
 public interface SystemResService {
     Long addSystemRes(SystemRes systemRes);
+    Long updateSystemRes(SystemRes systemRes);
+    Long deleteSystemRes(Long resId);
     List<SystemRes> findAll();
     SystemRes findById(Long resId);
+    int findByPidCount(Long pid);
 }

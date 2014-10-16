@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface SystemResDao {
     Long addSystemRes(SystemRes systemRes);
+    Long updateSystemRes(SystemRes systemRes);
+    Long deleteSystemRes(Long resId);
     List<SystemRes> findAll();
     SystemRes findById(Long resId);
+    int findByPidCount(Long pid);
 }

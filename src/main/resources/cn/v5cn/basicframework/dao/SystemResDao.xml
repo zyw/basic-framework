@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.v5cn.basicframework.dao.SystemResDao">
-    <!--<select id="findByUserName" resultType="SystemUser">
-        select * from system_user where loginname=#{userName}
-    </select>-->
+    <select id="findByPidCount" resultType="int">
+        select count(*) from system_res where pid=#{pid}
+    </select>
     <select id="findById" resultType="SystemRes">
         select * from system_res where id=#{resId}
     </select>
     <select id="findAll" resultType="SystemRes">
-        select * from system_res order by concat(pid,id) asc
+        select * from system_res order by concat(pids,id) asc
     </select>
     <insert id="addSystemRes">
-        insert into system_res(pid, name,type, url, permission, sortNum, available,des)
-        values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{available},#{des})
+        insert into system_res(pid, name,type, url, permission, sortNum,pids,available,des)
+        values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{pids},#{available},#{des})
     </insert>
+    <update id="updateSystemRes">
+        update system_res set name=#{name},type=#{type},url=#{url},
+        permission=#{permission},sortNum=#{sortNum},available=#{available},des=#{des}
+        where id=#{id}
+    </update>
+    <delete id="deleteSystemRes">
+        delete from system_res where id=#{resId}
+    </delete>
 </mapper>

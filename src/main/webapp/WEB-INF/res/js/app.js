@@ -73,6 +73,18 @@ $.extend($.validator.messages, {
                     clearInterval(int);
                 }
             }, int_speed);
+        },
+        activeNav:function(id,label){
+            $("#"+id+" a:first").addClass("active");
+            if(label === null) return;
+            $("#"+id+" ul").css("display","block");
+            $("#"+id+" ul li").each(function(i){
+                var $label = $(this).find("a");
+                if($label.text() === label){
+                    $label.parent().addClass("active");
+                    return false;
+                }
+            });
         }
     };
     window.v5Util = v5Util;

@@ -12,6 +12,7 @@ public class SystemRes implements Serializable {
     private String permission;
     private String url;
     private Integer sortNum;        /*排序*/
+    private String pids;            /*TreeTable排序*/
     private Integer type;       //1 菜单 2 按钮
     private Integer available;  //1 可用 0 不可用
     private String des;
@@ -64,6 +65,14 @@ public class SystemRes implements Serializable {
         this.sortNum = sortNum;
     }
 
+    public String getPids() {
+        return pids;
+    }
+
+    public void setPids(String pids) {
+        this.pids = pids;
+    }
+
     public Integer getType() {
         return type;
     }
@@ -88,6 +97,10 @@ public class SystemRes implements Serializable {
         this.des = des;
     }
 
+    public String catPids(){
+        return this.pids+this.getId()+"/";
+    }
+
     @Override
     public String toString() {
         return "SystemRes{" +
@@ -97,6 +110,7 @@ public class SystemRes implements Serializable {
                 ", permission='" + permission + '\'' +
                 ", url='" + url + '\'' +
                 ", sortNum=" + sortNum +
+                ", pids=" + pids +
                 ", type=" + type +
                 ", available=" + available +
                 ", des='" + des + '\'' +

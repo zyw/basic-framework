@@ -97,7 +97,7 @@ var Script = function () {
 
 //    tool tips
 
-    $('.tooltips').tooltip();
+    $("[data-toggle='tooltip']").tooltip();
 
 //    popovers
 

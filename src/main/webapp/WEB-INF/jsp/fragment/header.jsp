@@ -19,7 +19,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <%--<link rel="shortcut icon" href="img/favicon.html">--%>
 
-    <title>首页</title>
+    <title>V5基本框架</title>
 
     <!-- Bootstrap core CSS -->
     <link href="<c:url value="/r/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -294,21 +294,21 @@
     <div id="sidebar"  class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-            <li>
-                <a href="index.html">
+            <li id="dashboard">
+                <a href="<c:url value="/"/>">
                     <i class="fa fa-dashboard"></i>
                     <span>仪表盘</span>
                 </a>
             </li>
 
-            <li class="sub-menu">
+            <li class="sub-menu" id="systemManager">
                 <a href="javascript:;">
                     <i class="fa fa-cogs"></i>
                     <span>系统管理</span>
                 </a>
                 <ul class="sub">
                     <li><a  href="<c:url value="/res/list"/>">资源管理</a></li>
-                    <li><a  href="horizontal_menu.html">角色管理</a></li>
+                    <li><a  href="<c:url value="/role/list"/>">角色管理</a></li>
                     <li><a  href="language_switch_bar.html">用户管理</a></li>
                     <li><a  href="email_template.html" target="_blank">日志管理</a></li>
                 </ul>
@@ -420,12 +420,12 @@
                 </ul>
             </li>
             <li class="sub-menu">
-                <a href="javascript:;" class="active" >
+                <a href="javascript:;">
                     <i class="fa fa-glass"></i>
                     <span>Extra</span>
                 </a>
                 <ul class="sub">
-                    <li class="active"><a  href="blank.html">Blank Page</a></li>
+                    <li><a  href="blank.html">Blank Page</a></li>
                     <li><a  href="sidebar_closed.html">Sidebar Closed</a></li>
                     <li><a  href="people_directory.html">People Directory</a></li>
                     <li><a  href="coming_soon.html">Coming Soon</a></li>

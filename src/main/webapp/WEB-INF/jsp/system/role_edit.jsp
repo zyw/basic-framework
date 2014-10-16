@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ZYW
-  Date: 2014/10/13
-  Time: 16:17
+  Date: 2014/10/16
+  Time: 17:05
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -15,8 +15,8 @@
         <ul class="breadcrumb">
             <li><a href="<c:url value="/"/>"><i class="fa fa-home"></i> 首页</a></li>
             <li>系统管理</li>
-            <li><a href="<c:url value="/res/list"/>">资源管理</a></li>
-            <li class="active">资源编辑</li>
+            <li><a href="<c:url value="/role/list"/>">角色管理</a></li>
+            <li class="active">角色编辑</li>
         </ul>
         <!--breadcrumbs end -->
     </div>
@@ -24,16 +24,16 @@
         <section class="panel">
             <header class="panel-heading">
                 资源编辑
-<%--                <span class="tools pull-right">
-                    <button class="btn btn-success v5-panel-header-tool" type="button">
-                        <i class="fa fa-plus"></i>
-                        添&nbsp;加
-                    </button>
-                </span>--%>
+                <%--                <span class="tools pull-right">
+                                    <button class="btn btn-success v5-panel-header-tool" type="button">
+                                        <i class="fa fa-plus"></i>
+                                        添&nbsp;加
+                                    </button>
+                                </span>--%>
             </header>
             <div class="panel-body">
                 <div class="form">
-                    <form action="<c:url value="/res/edit"/>" method="post" id="resForm" class="cmxform form-horizontal tasi-form">
+                    <form action="<c:url value="/role/edit"/>" method="post" id="roleForm" class="cmxform form-horizontal tasi-form">
                         <div class="form-group ">
                             <label class="control-label col-lg-2">父资源</label>
                             <div class="col-lg-10">
@@ -113,13 +113,13 @@
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
     $(function(){
-        v5Util.activeNav("systemManager","资源管理");
+        v5Util.activeNav("systemManager","角色管理");
         $(":radio").iCheck({
             checkboxClass: 'icheckbox_flat-red',
             radioClass: 'iradio_flat-red'
         });
         $("#rtype").chosen({disable_search_threshold: 10});
-        $("#resForm").validate({
+        $("#roleForm").validate({
             submitHandler:function(form){
                 $(form).ajaxSubmit({
                     dataType:'json',

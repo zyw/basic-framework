@@ -37,25 +37,58 @@ public class ResourceAction {
         SystemRes systemRes = new SystemRes();
         if(resId == Long.valueOf(0)){
             systemRes.setPid(Long.valueOf(0));
-            systemRes.setName(getMessage("resource.firstres"));
+            systemRes.setPids("0/");
+            modelMap.addAttribute("pname",getMessage("resource.firstres"));
         }else{
             SystemRes res = systemResService.findById(resId);
             systemRes.setPid(res.getId());
-            systemRes.setName(res.getName());
+            systemRes.setPids(res.catPids());
+            modelMap.addAttribute("pname",res.getName());
         }
-
         modelMap.addAttribute("res",systemRes);
+        return "system/res_edit";
+    }
+
+    @RequestMapping(value="/edit/{resId}/update",method = RequestMethod.GET)
+    public String resEditUpdate(@PathVariable Long resId,ModelMap modelMap){
+        SystemRes res = systemResService.findById(resId);
+        SystemRes pRes = systemResService.findById(res.getPid());
+        modelMap.addAttribute("res",res);
+        if(pRes == null)
+            modelMap.addAttribute("pname",getMessage("resource.firstres"));
+        else
+            modelMap.addAttribute("pname",pRes.getName());
         return "system/res_edit";
     }
 
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ImmutableMap<String,String> resEdit(SystemRes systemRes){
-        System.out.println(systemRes);
+        if(systemRes.getId() != null){
+            Long result = systemResService.updateSystemRes(systemRes);
+            if(result < 1){
+                return ImmutableMap.of("status","0","message",getMessage("resource.updatefailed.message"));
+            }
+            return ImmutableMap.of("status","1","message",getMessage("resource.updatesuccess.message"));
+        }
         Long result = systemResService.addSystemRes(systemRes);
         if(result < 1){
-            return ImmutableMap.of("status","0","message",getMessage("resource.addfailed.messag"));
+            return ImmutableMap.of("status","0","message",getMessage("resource.addfailed.message"));
         }
         return ImmutableMap.of("status","1","message",getMessage("resource.addsuccess.message"));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public ImmutableMap<String,String> resDelete(Long resId){
+        int count = systemResService.findByPidCount(resId);
+        if(count > 0){
+            return ImmutableMap.of("status","0","message",getMessage("resource.count.message"));
+        }
+        Long result = systemResService.deleteSystemRes(resId);
+        if(result < 1){
+            return ImmutableMap.of("status","0","message",getMessage("resource.deletefailed.message"));
+        }
+        return ImmutableMap.of("status","1","message",getMessage("resource.deletesuccess.message"));
     }
 }
