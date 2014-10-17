@@ -1,6 +1,13 @@
 .v5-panel-header-tool{
     margin-top: -6px;
 }
+.v5-div-scroll{
+    border:1px #EFF2F7 solid;
+    overflow-y: scroll;
+    overflow-x:hidden;
+    height: 200px;
+    width: 220px;
+}
 .checkbox-inline label{
     margin-right: 10px;
 }
@@ -195,7 +202,7 @@ website:	http://code.google.com/p/jquerytree/
 
 .ztree * {padding:0; margin:0; font-size:12px; font-family: "微软雅黑",Verdana, Arial, Helvetica, AppleGothic, sans-serif}
 .ztree {margin:0; padding:5px; color:#333}
-.ztree li{padding:0; margin:0; list-style:none; line-height:16px; text-align:left; white-space:nowrap; outline:0}
+.ztree li{padding:0; margin:0; list-style:none; line-height:20px; text-align:left; white-space:nowrap; outline:0}
 .ztree li ul{ margin:0; padding:0 0 0 18px}
 /*.ztree li ul.line{ background:url(../images/ztree/line_conn.gif) 0 0 repeat-y;}*/
 
@@ -223,7 +230,7 @@ website:	http://code.google.com/p/jquerytree/
     line-height:1;
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
-    font-size:1.2em;
+    font-size:1.4em;
 }
 
 .ztree li span.button.chk {width:13px; height:13px; margin:0 3px 0 0; cursor: auto}
@@ -322,7 +329,7 @@ website:	http://code.google.com/p/jquerytree/
 }
 .ztree li span.button.ico_docu:before{
     content:"\f013";
-    font-size: 0.8em;
+    font-size: 1.1em;
     margin-right:2px;
     vertical-align:top;
     vertical-align:middle;

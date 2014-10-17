@@ -91,4 +91,12 @@ public class ResourceAction {
         }
         return ImmutableMap.of("status","1","message",getMessage("resource.deletesuccess.message"));
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/tree",method = RequestMethod.POST)
+    public List<SystemRes> resTree(Long id){
+        if(id == null)
+            return systemResService.findByPid(0L);
+        return systemResService.findByPid(id);
+    }
 }

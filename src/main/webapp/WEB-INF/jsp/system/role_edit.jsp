@@ -24,12 +24,6 @@
         <section class="panel">
             <header class="panel-heading">
                 资源编辑
-                <%--                <span class="tools pull-right">
-                                    <button class="btn btn-success v5-panel-header-tool" type="button">
-                                        <i class="fa fa-plus"></i>
-                                        添&nbsp;加
-                                    </button>
-                                </span>--%>
             </header>
             <div class="panel-body">
                 <div class="form">
@@ -63,7 +57,10 @@
                         <div class="form-group">
                             <label class="control-label col-lg-2">授权</label>
                             <div class="col-lg-10">
-                                <ul id="resTree" class="ztree"></ul>
+                                <input id="resIds" name="resIds" type="hidden">
+                                <div class="v5-div-scroll">
+                                    <ul id="resTree" class="ztree"></ul>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group ">
@@ -88,37 +85,38 @@
 </div>
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
-    var setting = {
-        check: {
-            enable: true,
-            chkStyle: "checkbox",
-            chkboxType: { "Y": "ps", "N": "ps" }
-        },
-        data: {
-            simpleData: {
-                enable: true
-            }
-        }
-    };
-
-    var zNodes =[
-        { id:1, pId:0, name:"随意勾选 1", open:true},
-        { id:11, pId:1, name:"随意勾选 1-1", open:true},
-        { id:111, pId:11, name:"随意勾选 1-1-1"},
-        { id:112, pId:11, name:"随意勾选 1-1-2"},
-        { id:12, pId:1, name:"随意勾选 1-2", open:true},
-        { id:121, pId:12, name:"随意勾选 1-2-1"},
-        { id:122, pId:12, name:"随意勾选 1-2-2"},
-        { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
-        { id:21, pId:2, name:"随意勾选 2-1"},
-        { id:22, pId:2, name:"随意勾选 2-2", open:true},
-        { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
-        { id:222, pId:22, name:"随意勾选 2-2-2"},
-        { id:23, pId:2, name:"随意勾选 2-3"}
-    ];
-
     $(function(){
-        $.fn.zTree.init($("#resTree"), setting, zNodes);
+        function onCheck(event, treeId, treeNode){
+            var zTree = $.fn.zTree.getZTreeObj("resTree"),
+                    nodes = zTree.getCheckedNodes(true),
+                    id = [];
+            nodes.sort(function compare(a,b){return a.id-b.id;});
+            for (var i=0, l=nodes.length; i < l; i++) {
+                id.push(nodes[i].id);
+            }
+            if (id.length > 0 ) $("#resIds").val(id.join(','));
+        }
+        var setting = {
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: { "Y": "ps", "N": "ps" }
+            },
+            view: {
+                dblClickExpand: false
+            },
+            async:{
+                enable: true,
+                dataType: "text",
+                url:'<c:url value="/res/tree"/>',
+                autoParam: ["id"]
+            },
+            callback:{
+                onCheck:onCheck
+            }
+        };
+
+        $.fn.zTree.init($("#resTree"), setting);
 
         v5Util.activeNav("systemManager","角色管理");
         $(":radio").iCheck({
@@ -127,6 +125,11 @@
         });
 //        $("#rtype").chosen({disable_search_threshold: 10});
         $("#roleForm").validate({
+            rules: {
+                sortNum: {
+                    number: true
+                }
+            },
             submitHandler:function(form){
                 $(form).ajaxSubmit({
                     dataType:'json',
@@ -134,7 +137,7 @@
                         if(responseText.status){
                             toastr.success(responseText.message);
                             setTimeout(function(){
-                                location.href="<c:url value="/res/list"/>";
+                                location.href="<c:url value="/role/list"/>";
                             },1000);
                             return;
                         }

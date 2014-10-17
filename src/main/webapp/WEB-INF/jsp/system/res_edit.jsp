@@ -24,12 +24,6 @@
         <section class="panel">
             <header class="panel-heading">
                 资源编辑
-<%--                <span class="tools pull-right">
-                    <button class="btn btn-success v5-panel-header-tool" type="button">
-                        <i class="fa fa-plus"></i>
-                        添&nbsp;加
-                    </button>
-                </span>--%>
             </header>
             <div class="panel-body">
                 <div class="form">
@@ -120,6 +114,11 @@
         });
         $("#rtype").chosen({disable_search_threshold: 10});
         $("#resForm").validate({
+            rules: {
+                sortNum: {
+                    number: true
+                }
+            },
             submitHandler:function(form){
                 $(form).ajaxSubmit({
                     dataType:'json',

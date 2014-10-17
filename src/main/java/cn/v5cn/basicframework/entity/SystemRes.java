@@ -17,6 +17,8 @@ public class SystemRes implements Serializable {
     private Integer available;  //1 可用 0 不可用
     private String des;
 
+    private boolean isParent = false;
+
     public Long getId() {
         return id;
     }
@@ -95,6 +97,14 @@ public class SystemRes implements Serializable {
 
     public void setDes(String des) {
         this.des = des;
+    }
+
+    public boolean getIsParent() {
+        return isParent;
+    }
+
+    public void setIsParent(boolean isParent) {
+        this.isParent = isParent;
     }
 
     public String catPids(){

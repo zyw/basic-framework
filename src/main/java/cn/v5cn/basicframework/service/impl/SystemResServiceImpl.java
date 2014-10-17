@@ -3,6 +3,7 @@ package cn.v5cn.basicframework.service.impl;
 import cn.v5cn.basicframework.dao.SystemResDao;
 import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.service.SystemResService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +46,19 @@ public class SystemResServiceImpl implements SystemResService {
     @Override
     public int findByPidCount(Long pid) {
         return systemResDao.findByPidCount(pid);
+    }
+
+    @Override
+    public List<SystemRes> findByPid(Long pid) {
+        List<SystemRes> result = Lists.newArrayList();
+        List<SystemRes> reses = systemResDao.findByPid(pid);
+        for(SystemRes res : reses){
+            int count = this.findByPidCount(res.getId());
+            if(count > 0){
+                res.setIsParent(true);
+            }
+            result.add(res);
+        }
+        return result;
     }
 }

@@ -10,6 +10,9 @@
     <select id="findAll" resultType="SystemRes">
         select * from system_res order by concat(pids,id) asc
     </select>
+    <select id="findByPid" resultType="SystemRes">
+        select * from system_res where pid=#{pid} order by concat(pids,id) asc
+    </select>
     <insert id="addSystemRes">
         insert into system_res(pid, name,type, url, permission, sortNum,pids,available,des)
         values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{pids},#{available},#{des})
