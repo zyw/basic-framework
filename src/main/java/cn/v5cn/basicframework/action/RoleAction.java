@@ -1,6 +1,8 @@
 package cn.v5cn.basicframework.action;
 
+import cn.v5cn.basicframework.entity.SystemRole;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,7 +19,8 @@ public class RoleAction {
     }
 
     @RequestMapping(value = "/edit",method = RequestMethod.GET)
-    public String roleEdit(){
+    public String roleEdit(ModelMap modelMap){
+        modelMap.addAttribute("role",new SystemRole());
         return "system/role_edit";
     }
 }

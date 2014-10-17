@@ -35,65 +35,41 @@
                 <div class="form">
                     <form action="<c:url value="/role/edit"/>" method="post" id="roleForm" class="cmxform form-horizontal tasi-form">
                         <div class="form-group ">
-                            <label class="control-label col-lg-2">父资源</label>
-                            <div class="col-lg-10">
-                                <input type="hidden" name="id" id="id" value="${res.id}">
-                                <input type="hidden" name="pid" id="pid" value="${res.pid}">
-                                <input type="hidden" name="pids" id="pids" value="${res.pids}">
-                                <label class="control-label">${pname}</label>
-                            </div>
-                        </div>
-                        <div class="form-group ">
                             <label class="control-label col-lg-2" for="rname">名&nbsp;&nbsp;称</label>
                             <div class="col-lg-10">
-                                <input type="text" name="name" id="rname" class="form-control" placeholder="名称" value="${res.name}" required>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="control-label col-lg-2" for="rurl">URL</label>
-                            <div class="col-lg-10">
-                                <input type="text" name="url" id="rurl" class="form-control" placeholder='请以"/"开头' value="${res.url}">
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="control-label col-lg-2" for="permission">权限字符串</label>
-                            <div class="col-lg-10">
-                                <input type="text" name="permission" id="permission" class="form-control" placeholder="例如：res:*" value="${res.permission}">
-                                <span class="help-block">以资源为例 res:* 全部权限 res:view，res:create，res:update，res:delete</span>
+                                <input type="hidden" value="${role.id}" name="id">
+                                <input type="text" name="name" id="rname" class="form-control" placeholder="名称" value="${role.name}" required>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="sortNum">序号</label>
                             <div class="col-lg-10">
-                                <input type="text" name="sortNum" id="sortNum" class="form-control" placeholder="序号" value="${res.sortNum}">
+                                <input type="text" name="sortNum" id="sortNum" class="form-control" placeholder="序号" value="${role.sortNum}">
                                 <span class="help-block">对资源进行排序，越小越靠前。</span>
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <label class="control-label col-lg-2" for="rtype">类型</label>
-                            <div class="col-lg-10">
-                                <select class="form-control m-bot15" name="type" id="rtype">
-                                    <option value="1" <c:if test="${res.type eq 1}">selected</c:if>>菜单</option>
-                                    <option value="2"<c:if test="${res.type eq 2}">selected</c:if>>按钮</option>
-                                </select>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2">状态</label>
                             <div class="col-lg-10">
                                 <label class="checkbox-inline" style="padding-left:0;">
-                                    <input type="radio" name="available" value="1" id="available1" <c:if test="${res.available eq 1 or empty res.available}">checked</c:if>>
+                                    <input type="radio" name="available" value="1" id="available1" <c:if test="${role.available eq 1 or empty role.available}">checked</c:if>>
                                     <label for="available1">可用</label>
-                                    <input type="radio" name="available" value="0" id="available0" <c:if test="${res.available eq 0}">checked</c:if>>
+                                    <input type="radio" name="available" value="0" id="available0" <c:if test="${role.available eq 0}">checked</c:if>>
                                     <label for="available0">禁用</label>
                                 </label>
 
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">授权</label>
+                            <div class="col-lg-10">
+                                <ul id="resTree" class="ztree"></ul>
+                            </div>
+                        </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="des">描述</label>
                             <div class="col-lg-10">
-                                <textarea name="des" id="des" class="form-control">${res.des}</textarea>
+                                <textarea name="des" id="des" class="form-control">${role.des}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
@@ -112,13 +88,44 @@
 </div>
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
+    var setting = {
+        check: {
+            enable: true,
+            chkStyle: "checkbox",
+            chkboxType: { "Y": "ps", "N": "ps" }
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        }
+    };
+
+    var zNodes =[
+        { id:1, pId:0, name:"随意勾选 1", open:true},
+        { id:11, pId:1, name:"随意勾选 1-1", open:true},
+        { id:111, pId:11, name:"随意勾选 1-1-1"},
+        { id:112, pId:11, name:"随意勾选 1-1-2"},
+        { id:12, pId:1, name:"随意勾选 1-2", open:true},
+        { id:121, pId:12, name:"随意勾选 1-2-1"},
+        { id:122, pId:12, name:"随意勾选 1-2-2"},
+        { id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+        { id:21, pId:2, name:"随意勾选 2-1"},
+        { id:22, pId:2, name:"随意勾选 2-2", open:true},
+        { id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+        { id:222, pId:22, name:"随意勾选 2-2-2"},
+        { id:23, pId:2, name:"随意勾选 2-3"}
+    ];
+
     $(function(){
+        $.fn.zTree.init($("#resTree"), setting, zNodes);
+
         v5Util.activeNav("systemManager","角色管理");
         $(":radio").iCheck({
             checkboxClass: 'icheckbox_flat-red',
             radioClass: 'iradio_flat-red'
         });
-        $("#rtype").chosen({disable_search_threshold: 10});
+//        $("#rtype").chosen({disable_search_threshold: 10});
         $("#roleForm").validate({
             submitHandler:function(form){
                 $(form).ajaxSubmit({

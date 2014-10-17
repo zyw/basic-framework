@@ -26,10 +26,9 @@
     <link href="<c:url value="/r/css/bootstrap-reset.css"/>" rel="stylesheet">
     <!--external css-->
     <link href="<c:url value="/r/css/font-awesome/css/font-awesome.css"/>" rel="stylesheet" />
-
     <!--right slidebar-->
     <link href="<c:url value="/r/css/slidebars.css"/>" rel="stylesheet">
-
+    <link href="<c:url value="/r/css/multi-select.css"/>" rel="stylesheet" />
     <!-- Custom styles for this template -->
     <link href="<c:url value="/r/css/style.css"/>" rel="stylesheet">
     <link href="<c:url value="/r/css/style-responsive.css"/>" rel="stylesheet" />
@@ -130,7 +129,6 @@
                         <span class="sr-only">45% Complete</span>
                     </div>
                 </div>
-
             </a>
         </li>
         <li class="external">
