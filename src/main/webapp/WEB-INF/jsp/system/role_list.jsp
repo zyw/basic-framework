@@ -38,7 +38,10 @@
                         <div class="form-group">
                             <label for="roleSearch" class="col-lg-2 col-sm-6 control-label" style="text-align: right;padding-right: 0px;">查询：</label>
                             <div class="col-lg-10 col-sm-6" style="padding-right: 0;">
-                                <input type="text" class="form-control" id="roleSearch" name="name" placeholder="查询">
+                                <div class="iconic-input right">
+                                    <i class="fa fa-times" style="color:#000;font-size: 18px;display: none;" id="deleteSearchTxt"></i>
+                                    <input type="text" class="form-control" id="roleSearch" name="name" placeholder="查询" value="${searchTxt}">
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -50,12 +53,12 @@
                         <th><i class="fa fa-bullhorn"></i> 名称</th>
                         <th class="hidden-phone"><i class="fa fa-question-circle"></i> 描述</th>
                         <th><i class="fa fa-bookmark"></i> 排序</th>
-                        <th><i class=" fa fa-edit"></i> 状态</th>
-                        <th>操作</th>
+                        <th><i class="fa fa-edit"></i> 状态</th>
+                        <th><i class="fa fa-gear"></i> 操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${roles.data}" var="role">
+                    <c:forEach items="${roles}" var="role">
                         <tr>
                             <td>${role.name}</td>
                             <td>${role.des}</td>
@@ -79,15 +82,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
-                <ul class="pagination pagination-sm pull-right" style="margin-top: 10px;">
-                    <li><a href="#">«</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">»</a></li>
-                </ul>
+                ${pagination}
             </div>
         </section>
     </div>
@@ -117,6 +112,25 @@
         $("#editRole").click(function(){
             location.href="<c:url value="/role/edit"/>";
         });
+        $("#deleteSearchTxt").click(function(){
+            $("#roleSearch").val("");
+            $("#roleSearchForm").submit();
+            $("#deleteSearchTxt").css("display","none");
+        });
+        $("#roleSearch").keyup(function(e){
+            if(13 === e.keyCode){
+                $("#roleSearchForm").submit();
+            }else{
+                if($.trim($(this).val()) === "")
+                    $("#deleteSearchTxt").css("display","none");
+                else
+                    $("#deleteSearchTxt").css("display","block");
+            }
+        });
+
+        if($.trim($("#roleSearch").val()) !== "")
+            $("#deleteSearchTxt").css("display","block");
+
         /*$("#example-basic").treetable({ expandable: true });
         var resId = "";
         $(".delete-res").click(function(){

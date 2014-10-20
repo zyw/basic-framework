@@ -15,7 +15,7 @@
         <ul class="breadcrumb">
             <li><a href="<c:url value="/"/>"><i class="fa fa-home"></i> 首页</a></li>
             <li>系统管理</li>
-            <li><a href="<c:url value="/role/list"/>">角色管理</a></li>
+            <li><a href="<c:url value="/role/list/1"/>">角色管理</a></li>
             <li class="active">角色编辑</li>
         </ul>
         <!--breadcrumbs end -->
