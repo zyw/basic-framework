@@ -33,153 +33,61 @@
                 </span>
             </header>
             <div class="panel-body">
+                <div class="col-lg-5 col-lg-offset-7">
+                    <form id="roleSearchForm" class="form-horizontal" method="post" action="<c:url value="/role/list/1"/>" role="form">
+                        <div class="form-group">
+                            <label for="roleSearch" class="col-lg-2 col-sm-6 control-label" style="text-align: right;padding-right: 0px;">查询：</label>
+                            <div class="col-lg-10 col-sm-6" style="padding-right: 0;">
+                                <input type="text" class="form-control" id="roleSearch" name="name" placeholder="查询">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <table class="table table-striped table-bordered table-advance table-hover">
                     <thead>
                     <tr>
-                        <th><i class="fa fa-bullhorn"></i> Company</th>
-                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> Descrition</th>
-                        <th><i class="fa fa-bookmark"></i> Profit</th>
-                        <th><i class=" fa fa-edit"></i> Status</th>
-                        <th></th>
+                        <th><i class="fa fa-bullhorn"></i> 名称</th>
+                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> 描述</th>
+                        <th><i class="fa fa-bookmark"></i> 排序</th>
+                        <th><i class=" fa fa-edit"></i> 状态</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><a href="#">Vector Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td>12120.00$ </td>
-                        <td><span class="label label-info label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                Adimin co
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>56456.00$ </td>
-                        <td><span class="label label-warning label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                boka soka
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>14400.00$ </td>
-                        <td><span class="label label-success label-mini">Paid</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                salbal llb
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>2323.50$ </td>
-                        <td><span class="label label-danger label-mini">Paid</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Vector Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td>12120.00$ </td>
-                        <td><span class="label label-primary label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                Adimin co
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>56456.00$ </td>
-                        <td><span class="label label-warning label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Vector Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td>12120.00$ </td>
-                        <td><span class="label label-success label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                Adimin co
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>56456.00$ </td>
-                        <td><span class="label label-warning label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Vector Ltd</a></td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo imit</td>
-                        <td>12120.00$ </td>
-                        <td><span class="label label-info label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <a href="#">
-                                Adimin co
-                            </a>
-                        </td>
-                        <td class="hidden-phone">Lorem Ipsum dorolo</td>
-                        <td>56456.00$ </td>
-                        <td><span class="label label-warning label-mini">Due</span></td>
-                        <td>
-                            <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
-                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                        </td>
-                    </tr>
+                    <c:forEach items="${roles.data}" var="role">
+                        <tr>
+                            <td>${role.name}</td>
+                            <td>${role.des}</td>
+                            <td>${role.sortNum}</td>
+                            <td>
+                                <c:if test="${role.available eq 1}">
+                                    <span class="badge bg-success">可用</span>
+                                </c:if>
+                                <c:if test="${role.available eq 0}">
+                                    <span class="badge bg-important">禁用</span>
+                                </c:if>
+                            </td>
+                            <td>
+                                <%--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>--%>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                   title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                   title="删除" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
+                <ul class="pagination pagination-sm pull-right" style="margin-top: 10px;">
+                    <li><a href="#">«</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">»</a></li>
+                </ul>
             </div>
         </section>
     </div>

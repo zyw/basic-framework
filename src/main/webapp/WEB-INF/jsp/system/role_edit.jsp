@@ -137,7 +137,7 @@
                         if(responseText.status){
                             toastr.success(responseText.message);
                             setTimeout(function(){
-                                location.href="<c:url value="/role/list"/>";
+                                location.href="<c:url value="/role/list/1"/>";
                             },1000);
                             return;
                         }

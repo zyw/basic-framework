@@ -10,11 +10,11 @@
      <select id="findByResId" resultType="Resource">
          select * from sys_resource where id=#{resId}
      </select>-->
-     <insert id="addRoleResBatch" useGeneratedKeys="true">
-         insert into system_role(role_id, res_id)
+     <insert id="addRoleResBatch" parameterType="list">
+         insert into system_role_res(role_id, res_id)
          values
          <foreach collection="list" item="item" index="index" separator=",">
-          (#{role_id},#{res_id})
+          (#{item.role_id},#{item.res_id})
          </foreach>
      </insert>
 </mapper>

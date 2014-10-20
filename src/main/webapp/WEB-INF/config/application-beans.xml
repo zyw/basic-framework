@@ -105,13 +105,13 @@
             </bean>
         </property>
     </bean>
-    <!--配置读取系统配置文件的Properites文件
-    <bean id="propertyConfigurer" class="cn.v5cn.v5cms.util.PropertyUtils">
+    <!--配置读取系统配置文件的Properites文件-->
+    <bean id="propertyConfigurer" class="cn.v5cn.basicframework.util.PropertyUtils">
         <property name="locations">
             <list>
-                <value>classpath:sys_constant.properties</value>
+                <value>/WEB-INF/config/sys_config.properties</value>
             </list>
         </property>
-    </bean>-->
+    </bean>
     <import resource="application-shiro.xml"/>
 </beans>
