@@ -73,7 +73,7 @@
                             </td>
                             <td>
                                 <%--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>--%>
-                                <a href="#" data-toggle="tooltip" data-placement="top"
+                                <a href="<c:url value="/role/edit/${role.id}"/>" data-toggle="tooltip" data-placement="top"
                                    title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                 <a href="#" data-toggle="tooltip" data-placement="top"
                                    title="删除" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
@@ -110,7 +110,7 @@
         v5Util.activeNav("systemManager","角色管理");
 
         $("#editRole").click(function(){
-            location.href="<c:url value="/role/edit"/>";
+            location.href="<c:url value="/role/edit/0"/>";
         });
         $("#deleteSearchTxt").click(function(){
             $("#roleSearch").val("");

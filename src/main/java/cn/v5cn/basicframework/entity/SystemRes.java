@@ -1,6 +1,7 @@
 package cn.v5cn.basicframework.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by ZYW on 2014/10/14.
@@ -16,6 +17,8 @@ public class SystemRes implements Serializable {
     private Integer type;       //1 菜单 2 按钮
     private Integer available;  //1 可用 0 不可用
     private String des;
+
+    private List<SystemRes> children;
 
     private boolean isParent = false;
 
@@ -109,6 +112,14 @@ public class SystemRes implements Serializable {
 
     public String catPids(){
         return this.pids+this.getId()+"/";
+    }
+
+    public List<SystemRes> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<SystemRes> children) {
+        this.children = children;
     }
 
     @Override

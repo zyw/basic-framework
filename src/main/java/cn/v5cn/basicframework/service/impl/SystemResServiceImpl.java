@@ -61,4 +61,20 @@ public class SystemResServiceImpl implements SystemResService {
         }
         return result;
     }
+    /**
+     * 递归查询所以父资源和子资源
+     * */
+    @Override
+    public List<SystemRes> findAll(List<SystemRes> reses){
+        if(reses == null){
+            reses = systemResDao.findByPid(0L);
+        }
+        for(SystemRes res : reses){
+            if(this.findByPidCount(res.getId())<1) continue;
+            List<SystemRes> temp = systemResDao.findByPid(res.getId());
+            res.setChildren(temp);
+            this.findAll(temp);
+        }
+        return reses;
+    }
 }

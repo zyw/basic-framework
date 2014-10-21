@@ -158,10 +158,7 @@
 <!--footer start-->
 <footer class="site-footer">
     <div class="text-center">
-        2013 &copy; FlatLab by VectorLab.
-        <a href="#" class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </a>
+        2014 &copy; basic-framework by <a href="http://www.v5cn.cn" style="color:#FF0000">V5科技</a>。
     </div>
 </footer>
 <!--footer end-->
@@ -187,9 +184,10 @@
 <script src="<c:url value='/r/js/common-scripts.js'/>"></script>
 <script src="<c:url value='/r/js/app.js'/>"></script>
 
-
+<script type="text/javascript">
+    v5Util.backToTop.init("<c:url value="/r/images/up.png"/>")
+</script>
 
 </body>
 
-<!-- Mirrored from thevectorlab.net/flatlab/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2014 05:30:10 GMT -->
 </html>

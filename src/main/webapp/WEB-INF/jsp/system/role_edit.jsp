@@ -108,11 +108,14 @@
             async:{
                 enable: true,
                 dataType: "text",
-                url:'<c:url value="/res/tree"/>',
-                autoParam: ["id"]
+                url:'<c:url value="/res/ol/tree"/>'
             },
             callback:{
-                onCheck:onCheck
+                onCheck:onCheck,
+                onAsyncSuccess:function(event, treeId, treeNode, msg){
+                    var zTree = $.fn.zTree.getZTreeObj("resTree");
+                    zTree.expandAll(true);
+                }
             }
         };
 

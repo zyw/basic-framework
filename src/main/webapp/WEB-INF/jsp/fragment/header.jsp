@@ -7,17 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from thevectorlab.net/flatlab/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 08 Oct 2014 05:30:10 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <%--<link rel="shortcut icon" href="img/favicon.html">--%>
+    <meta name="description" content="V5科技致力于软件开发与集成和各种企业门户的制作。">
+    <meta name="author" content="V5科技">
+    <meta name="keyword" content="V5科技, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
     <title>V5基本框架</title>
 
@@ -50,7 +49,7 @@
     <div data-original-title="Toggle Navigation" data-placement="right" class="fa fa-bars tooltips"></div>
 </div>
 <!--logo start-->
-<a href="index.html" class="logo" >Flat<span>lab</span></a>
+<a href="index.html" class="logo" >basic <span>framework</span></a>
 <!--logo end-->
 <div class="nav notify-row" id="top_menu">
 <!--  notification start -->
@@ -266,7 +265,7 @@
         <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img alt="" src="<c:url value="/r/images/avatar1_small.jpg"/>">
-                <span class="username">Jhon Doue</span>
+                <span class="username"><shiro:principal/></span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">

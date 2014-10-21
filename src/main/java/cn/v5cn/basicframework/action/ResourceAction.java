@@ -2,6 +2,7 @@ package cn.v5cn.basicframework.action;
 
 import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.service.SystemResService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,78 +26,90 @@ public class ResourceAction {
     @Autowired
     private SystemResService systemResService;
 
-    @RequestMapping(value="/list",method = RequestMethod.GET)
-    public String resList(ModelMap modelMap){
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String resList(ModelMap modelMap) {
         List<SystemRes> reses = systemResService.findAll();
-        modelMap.addAttribute("reses",reses);
+        modelMap.addAttribute("reses", reses);
         return "system/res_list";
     }
 
-    @RequestMapping(value="/edit/{resId}",method = RequestMethod.GET)
-    public String resEdit(@PathVariable Long resId,ModelMap modelMap){
+    @RequestMapping(value = "/edit/{resId}", method = RequestMethod.GET)
+    public String resEdit(@PathVariable Long resId, ModelMap modelMap) {
         SystemRes systemRes = new SystemRes();
-        if(resId == Long.valueOf(0)){
+        if (resId == Long.valueOf(0)) {
             systemRes.setPid(Long.valueOf(0));
             systemRes.setPids("0/");
-            modelMap.addAttribute("pname",getMessage("resource.firstres"));
-        }else{
+            modelMap.addAttribute("pname", getMessage("resource.firstres"));
+        } else {
             SystemRes res = systemResService.findById(resId);
             systemRes.setPid(res.getId());
             systemRes.setPids(res.catPids());
-            modelMap.addAttribute("pname",res.getName());
+            modelMap.addAttribute("pname", res.getName());
         }
-        modelMap.addAttribute("res",systemRes);
+        modelMap.addAttribute("res", systemRes);
         return "system/res_edit";
     }
 
-    @RequestMapping(value="/edit/{resId}/update",method = RequestMethod.GET)
-    public String resEditUpdate(@PathVariable Long resId,ModelMap modelMap){
+    @RequestMapping(value = "/edit/{resId}/update", method = RequestMethod.GET)
+    public String resEditUpdate(@PathVariable Long resId, ModelMap modelMap) {
         SystemRes res = systemResService.findById(resId);
         SystemRes pRes = systemResService.findById(res.getPid());
-        modelMap.addAttribute("res",res);
-        if(pRes == null)
-            modelMap.addAttribute("pname",getMessage("resource.firstres"));
+        modelMap.addAttribute("res", res);
+        if (pRes == null)
+            modelMap.addAttribute("pname", getMessage("resource.firstres"));
         else
-            modelMap.addAttribute("pname",pRes.getName());
+            modelMap.addAttribute("pname", pRes.getName());
         return "system/res_edit";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ImmutableMap<String,String> resEdit(SystemRes systemRes){
-        if(systemRes.getId() != null){
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ImmutableMap<String, String> resEdit(SystemRes systemRes) {
+        if (systemRes.getId() != null) {
             Long result = systemResService.updateSystemRes(systemRes);
-            if(result < 1){
-                return ImmutableMap.of("status","0","message",getMessage("resource.updatefailed.message"));
+            if (result < 1) {
+                return ImmutableMap.of("status", "0", "message", getMessage("resource.updatefailed.message"));
             }
-            return ImmutableMap.of("status","1","message",getMessage("resource.updatesuccess.message"));
+            return ImmutableMap.of("status", "1", "message", getMessage("resource.updatesuccess.message"));
         }
         Long result = systemResService.addSystemRes(systemRes);
-        if(result < 1){
-            return ImmutableMap.of("status","0","message",getMessage("resource.addfailed.message"));
+        if (result < 1) {
+            return ImmutableMap.of("status", "0", "message", getMessage("resource.addfailed.message"));
         }
-        return ImmutableMap.of("status","1","message",getMessage("resource.addsuccess.message"));
+        return ImmutableMap.of("status", "1", "message", getMessage("resource.addsuccess.message"));
     }
 
     @ResponseBody
-    @RequestMapping(value = "/delete",method = RequestMethod.POST)
-    public ImmutableMap<String,String> resDelete(Long resId){
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public ImmutableMap<String, String> resDelete(Long resId) {
         int count = systemResService.findByPidCount(resId);
-        if(count > 0){
-            return ImmutableMap.of("status","0","message",getMessage("resource.count.message"));
+        if (count > 0) {
+            return ImmutableMap.of("status", "0", "message", getMessage("resource.count.message"));
         }
         Long result = systemResService.deleteSystemRes(resId);
-        if(result < 1){
-            return ImmutableMap.of("status","0","message",getMessage("resource.deletefailed.message"));
+        if (result < 1) {
+            return ImmutableMap.of("status", "0", "message", getMessage("resource.deletefailed.message"));
         }
-        return ImmutableMap.of("status","1","message",getMessage("resource.deletesuccess.message"));
+        return ImmutableMap.of("status", "1", "message", getMessage("resource.deletesuccess.message"));
     }
 
+    /*
+    * 分级异步加载资源树
+    * */
     @ResponseBody
-    @RequestMapping(value = "/tree",method = RequestMethod.POST)
-    public List<SystemRes> resTree(Long id){
+    @RequestMapping(value = "/gl/tree", method = RequestMethod.POST)
+    public List<SystemRes> resGradingLoadingTree(Long id) throws JsonProcessingException {
         if(id == null)
             return systemResService.findByPid(0L);
         return systemResService.findByPid(id);
+    }
+    /*
+    * 一次加载资源树
+    * */
+    @ResponseBody
+    @RequestMapping(value = "/ol/tree", method = RequestMethod.POST)
+    public List<SystemRes> resOnceLoadingTree() {
+        List<SystemRes> parentAndChild = systemResService.findAll(null);
+        return parentAndChild;
     }
 }

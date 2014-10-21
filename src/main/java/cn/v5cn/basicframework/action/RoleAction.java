@@ -50,9 +50,13 @@ public class RoleAction {
         return "system/role_list";
     }
 
-    @RequestMapping(value = "/edit",method = RequestMethod.GET)
-    public String roleEdit(ModelMap modelMap){
-        modelMap.addAttribute("role",new SystemRole());
+    @RequestMapping(value = "/edit/{roleId}",method = RequestMethod.GET)
+    public String roleEdit(@PathVariable Long roleId,ModelMap modelMap){
+        if(roleId == 0)
+            modelMap.addAttribute("role",new SystemRole());
+        else {
+
+        }
         return "system/role_edit";
     }
 
