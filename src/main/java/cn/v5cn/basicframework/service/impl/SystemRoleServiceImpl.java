@@ -7,6 +7,8 @@ import cn.v5cn.basicframework.service.SystemRoleResService;
 import cn.v5cn.basicframework.service.SystemRoleService;
 import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.PropertyUtils;
+import cn.v5cn.basicframework.util.TupleTwo;
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,6 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Transactional
     public int addSystemRoleAndRRS(SystemRole systemRole, String resIds) {
         Long affectedCount = systemRoleDao.addSystemRole(systemRole);
-        System.out.println("id::::"+affectedCount);
         if(affectedCount == null || affectedCount < 0
                 || systemRole.getId() == null || systemRole.getId() < 0) return 0;
 
@@ -61,5 +62,46 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         List<SystemRole> result = systemRoleDao.listRoleByName(role,pagination.getOffset(),pagination.getRows());
         pagination.setData(result);
         return pagination;
+    }
+
+    @Override
+    public SystemRole findByRoleId(Long roleId) {
+        return systemRoleDao.findByRoleId(roleId);
+    }
+
+    @Override
+    @Transactional
+    public int updateSystemRoleAndRRS(SystemRole systemRole, String resIds) {
+        int roleUpdate = systemRoleDao.updateSystemRole(systemRole);
+        if(roleUpdate < 1) return 0;
+
+        Long deleteResult = systemRoleResService.deleteByRoleId(systemRole.getId());
+        if(deleteResult < 1) return 0;
+
+        if(resIds != null && resIds.length() > 0){
+            List<SystemRoleRes> rrs = Lists.newArrayList();
+            List<String> resIdList = Splitter.on(",").splitToList(resIds);
+            SystemRoleRes rr = null;
+            for(String resId : resIdList){
+                rr = new SystemRoleRes();
+                rr.setRole_id(systemRole.getId());
+                rr.setRes_id(Long.valueOf(resId));
+                rrs.add(rr);
+            }
+            Long result = systemRoleResService.addRoleResBatch(rrs);
+            if(result == null || result < 1)
+                return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    public TupleTwo<SystemRole, String> findSystemRoleAndResIdsByRoleId(Long roleId) {
+        SystemRole role = this.findByRoleId(roleId);
+        List<Long> resIds = systemRoleResService.findByResIdRoleId(roleId);
+        String resIdsStr = "";
+        if(resIds != null && resIds.size() > 0)
+            resIdsStr = Joiner.on(",").join(resIds);
+        return new TupleTwo<SystemRole, String>(role,resIdsStr);
     }
 }

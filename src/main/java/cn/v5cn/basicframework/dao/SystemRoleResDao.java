@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface SystemRoleResDao {
     Long addRoleResBatch(List<SystemRoleRes> rrs);
+    List<Long> findByResIdRoleId(Long roleId);
+    Long deleteByRoleId(Long roleId);
 }

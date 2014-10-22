@@ -5,6 +5,7 @@ import cn.v5cn.basicframework.service.SystemRoleService;
 import cn.v5cn.basicframework.util.HttpUtils;
 import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.SystemUtils;
+import cn.v5cn.basicframework.util.TupleTwo;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,9 @@ public class RoleAction {
         if(roleId == 0)
             modelMap.addAttribute("role",new SystemRole());
         else {
-
+            TupleTwo<SystemRole, String> roleAndResIds = systemRoleService.findSystemRoleAndResIdsByRoleId(roleId);
+            modelMap.addAttribute("role",roleAndResIds.a);
+            modelMap.addAttribute("resIds", roleAndResIds.b);
         }
         return "system/role_edit";
     }
@@ -63,10 +66,17 @@ public class RoleAction {
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ImmutableMap<String,String> roleEdit(SystemRole systemRole,String resIds){
-        int result = systemRoleService.addSystemRoleAndRRS(systemRole, resIds);
-        if(result != 0)
-            return ImmutableMap.of("status","1","message",getMessage("role.addsuccess.message"));
+        if(systemRole.getId() == null){
+            int result = systemRoleService.addSystemRoleAndRRS(systemRole, resIds);
+            if(result != 0)
+                return ImmutableMap.of("status","1","message",getMessage("role.addsuccess.message"));
 
-        return ImmutableMap.of("status","0","message",getMessage("role.addfailed.message"));
+            return ImmutableMap.of("status","0","message",getMessage("role.addfailed.message"));
+        }
+        int result = systemRoleService.updateSystemRoleAndRRS(systemRole,resIds);
+        if(result != 0){
+            return ImmutableMap.of("status","1","message",getMessage("role.updatesuccess.message"));
+        }
+        return ImmutableMap.of("status","0","message",getMessage("role.updatefailed.message"));
     }
 }

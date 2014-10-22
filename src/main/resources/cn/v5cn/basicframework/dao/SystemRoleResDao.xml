@@ -6,10 +6,10 @@
      </select>
      <select id="findAll" resultType="Resource">
          select * from sys_resource order by concat(parent_ids, id) asc
-     </select>
-     <select id="findByResId" resultType="Resource">
-         select * from sys_resource where id=#{resId}
      </select>-->
+     <select id="findByResIdRoleId" resultType="long">
+         select res_id from system_role_res where role_id=#{roleId}
+     </select>
      <insert id="addRoleResBatch" parameterType="list">
          insert into system_role_res(role_id, res_id)
          values
@@ -17,4 +17,7 @@
           (#{item.role_id},#{item.res_id})
          </foreach>
      </insert>
+    <delete id="deleteByRoleId">
+        delete from system_role_res where role_id=#{roleId}
+    </delete>
 </mapper>

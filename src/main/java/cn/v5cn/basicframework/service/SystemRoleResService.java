@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface SystemRoleResService {
     Long addRoleResBatch(List<SystemRoleRes> rrs);
+    List<Long> findByResIdRoleId(Long roleId);
+    Long deleteByRoleId(Long roleId);
 }

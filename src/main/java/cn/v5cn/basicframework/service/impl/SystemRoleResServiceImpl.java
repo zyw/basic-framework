@@ -21,4 +21,14 @@ public class SystemRoleResServiceImpl implements SystemRoleResService {
     public Long addRoleResBatch(List<SystemRoleRes> rrs) {
         return systemRoleResDao.addRoleResBatch(rrs);
     }
+
+    @Override
+    public List<Long> findByResIdRoleId(Long roleId) {
+        return systemRoleResDao.findByResIdRoleId(roleId);
+    }
+
+    @Override
+    public Long deleteByRoleId(Long roleId) {
+        return systemRoleResDao.deleteByRoleId(roleId);
+    }
 }

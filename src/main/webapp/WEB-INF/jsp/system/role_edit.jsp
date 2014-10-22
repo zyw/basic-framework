@@ -82,6 +82,7 @@
             </div>
         </section>
     </div>
+    <input type="hidden" id="update_resIds" value="${resIds}">
 </div>
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
@@ -115,6 +116,16 @@
                 onAsyncSuccess:function(event, treeId, treeNode, msg){
                     var zTree = $.fn.zTree.getZTreeObj("resTree");
                     zTree.expandAll(true);
+                    var resIds = $("#update_resIds").val();
+                    if(resIds !== null && resIds.length > 0){
+                        var resIdArr = resIds.split(",");
+                        var nodes = zTree.transformToArray(zTree.getNodes());
+                        console.log(nodes);
+                        for (var i=0, l=nodes.length; i < l; i++) {
+                            if($.inArray(nodes[i].id+"",resIdArr) === -1) continue;
+                            zTree.checkNode(nodes[i], true, false,true);
+                        }
+                    }
                 }
             }
         };

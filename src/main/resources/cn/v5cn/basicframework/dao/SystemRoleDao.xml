@@ -17,11 +17,14 @@
             or des like "%"#{name}"%"
         </if>
     </select>
-    <!-- <select id="findByResId" resultType="Resource">
-        select * from sys_resource where id=#{resId}
-    </select>-->
+    <select id="findByRoleId" resultType="SystemRole">
+        select * from system_role where id=#{roleId}
+    </select>
      <insert id="addSystemRole" useGeneratedKeys="true" keyProperty="id">
          insert into system_role(name, sortNum, available, des)
          values(#{name},#{sortNum}, #{available}, #{des})
      </insert>
+    <update id="updateSystemRole">
+        update system_role set name=#{name},sortNum=#{sortNum},available=#{available},des=#{des} where id=#{id}
+    </update>
 </mapper>

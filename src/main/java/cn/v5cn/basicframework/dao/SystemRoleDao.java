@@ -17,4 +17,6 @@ public interface SystemRoleDao {
                                     @Param("offset")Integer offset,
                                     @Param("rows")Integer rows);
     int listRoleCountByName(SystemRole role);
+    SystemRole findByRoleId(Long roleId);
+    int updateSystemRole(SystemRole systemRole);
 }
