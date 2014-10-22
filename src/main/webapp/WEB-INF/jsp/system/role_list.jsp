@@ -75,8 +75,8 @@
                                 <%--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>--%>
                                 <a href="<c:url value="/role/edit/${role.id}"/>" data-toggle="tooltip" data-placement="top"
                                    title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                <a href="#" data-toggle="tooltip" data-placement="top"
-                                   title="删除" class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></a>
+                                <a href="javascript:;" data-roleid="${role.id}" data-toggle="tooltip" data-placement="top"
+                                   title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -87,7 +87,7 @@
         </section>
     </div>
 </div>
-<div class="modal fade" id="deleteResModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="deleteRoleModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -95,11 +95,11 @@
                 <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
-                您确定要删除资源数据吗？
+                您确定要删除角色数据吗？
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                <button class="btn btn-success" id="enterDeleteRes" type="button">确定</button>
+                <button class="btn btn-success" id="enterDeleteRole" type="button">确定</button>
             </div>
         </div>
     </div>
@@ -131,14 +131,13 @@
         if($.trim($("#roleSearch").val()) !== "")
             $("#deleteSearchTxt").css("display","block");
 
-        /*$("#example-basic").treetable({ expandable: true });
-        var resId = "";
-        $(".delete-res").click(function(){
-            resId = $(this).data("resid");
-            $('#deleteResModel').modal('show');
+        var roleid = "";
+        $(".delete-role").click(function(){
+            roleid = $(this).data("roleid");
+            $('#deleteRoleModel').modal('show');
         });
-        $("#enterDeleteRes").click(function(){
-            $('#deleteResModel').modal('hide');
+        /*$("#enterDeleteRole").click(function(){
+            $('#deleteRoleModel').modal('hide');
             if(resId !== ""){
                 $.ajax({
                     <%--url:"<c:url value="/res/delete"/>",--%>

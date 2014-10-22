@@ -76,7 +76,6 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if(roleUpdate < 1) return 0;
 
         Long deleteResult = systemRoleResService.deleteByRoleId(systemRole.getId());
-        if(deleteResult < 1) return 0;
 
         if(resIds != null && resIds.length() > 0){
             List<SystemRoleRes> rrs = Lists.newArrayList();

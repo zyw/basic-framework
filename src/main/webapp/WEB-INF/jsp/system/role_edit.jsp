@@ -95,7 +95,10 @@
             for (var i=0, l=nodes.length; i < l; i++) {
                 id.push(nodes[i].id);
             }
-            if (id.length > 0 ) $("#resIds").val(id.join(','));
+            if (id.length > 0 )
+                $("#resIds").val(id.join(','));
+            else
+                $("#resIds").val("");
         }
         var setting = {
             check: {
