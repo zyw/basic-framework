@@ -306,7 +306,7 @@
                 <ul class="sub">
                     <li><a  href="<c:url value="/res/list"/>">资源管理</a></li>
                     <li><a  href="<c:url value="/role/list/1"/>">角色管理</a></li>
-                    <li><a  href="language_switch_bar.html">用户管理</a></li>
+                    <li><a  href="<c:url value="/user/list"/>">用户管理</a></li>
                     <li><a  href="email_template.html" target="_blank">日志管理</a></li>
                 </ul>
             </li>
