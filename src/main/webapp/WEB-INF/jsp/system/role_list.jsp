@@ -30,6 +30,11 @@
                         <i class="fa fa-plus"></i>
                         添&nbsp;加
                     </button>
+                    <button id="batchRoleDelete" class="btn btn-warning v5-panel-header-tool" type="button"
+                            data-toggle="tooltip" data-placement="top" title="批量删除">
+                        <i class="fa fa-times-circle"></i>
+                        批量删除
+                    </button>
                 </span>
             </header>
             <div class="panel-body">
@@ -48,8 +53,19 @@
                 </div>
 
                 <table class="table table-striped table-bordered table-advance table-hover">
+                    <colgroup>
+                        <col class="col-xs-1 v5-col-xs-1">
+                        <col class="col-xs-2">
+                        <col class="col-xs-3">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
+                        <col class="col-xs-2">
+                    </colgroup>
                     <thead>
                     <tr>
+                        <th class="v5-td-center">
+                            <input type="checkbox" id="batchChecked"/>
+                        </th>
                         <th><i class="fa fa-bullhorn"></i> 名称</th>
                         <th class="hidden-phone"><i class="fa fa-question-circle"></i> 描述</th>
                         <th><i class="fa fa-bookmark"></i> 排序</th>
@@ -60,6 +76,9 @@
                     <tbody>
                     <c:forEach items="${roles}" var="role">
                         <tr>
+                            <td class="v5-td-center">
+                                <input type="checkbox" class="batch-checked-item" value="${role.id}"/>
+                            </td>
                             <td>${role.name}</td>
                             <td>${role.des}</td>
                             <td>${role.sortNum}</td>
@@ -107,6 +126,27 @@
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
     $(function(){
+        function deleteRoleFun(roleIds){
+            $.ajax({
+                url:"<c:url value="/role/delete"/>",
+                type:"POST",
+                data:{roleIds:roleIds},
+                dataType:'json',
+                success:function(data,textStatus,jqXHR){
+                    if(data.status){
+                        toastr.success(data.message);
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                        return;
+                    }
+                    toastr.error(data.message);
+                },
+                error:function(jqXHR,textStatus,errorThrown){
+                    toastr.error("出错了："+errorThrown+" : "+textStatus);
+                }
+            });
+        }
         v5Util.activeNav("systemManager","角色管理");
 
         $("#editRole").click(function(){
@@ -131,34 +171,33 @@
         if($.trim($("#roleSearch").val()) !== "")
             $("#deleteSearchTxt").css("display","block");
 
-        var roleid = "";
+        //待删除的角色ID
+        var roleIds = "";
         $(".delete-role").click(function(){
-            roleid = $(this).data("roleid");
+            roleIds = $(this).data("roleid");
             $('#deleteRoleModel').modal('show');
         });
-        /*$("#enterDeleteRole").click(function(){
+        $("#enterDeleteRole").click(function(){
             $('#deleteRoleModel').modal('hide');
-            if(resId !== ""){
-                $.ajax({
-                    <%--url:"<c:url value="/res/delete"/>",--%>
-                    type:"POST",
-                    data:{resId:resId},
-                    dataType:'json',
-                    success:function(data,textStatus,jqXHR){
-                        if(data.status){
-                            toastr.success(data.message);
-                            setTimeout(function(){
-                                location.reload();
-                            },1000);
-                            return;
-                        }
-                        toastr.error(data.message)
-                    },
-                    error:function(jqXHR,textStatus,errorThrown){
-                        toastr.error("出错了："+errorThrown+" : "+textStatus);
-                    }
-                });
+            if(roleIds !== ""){
+                deleteRoleFun(roleIds);
             }
-        });*/
+            roleIds = "";
+        });
+        $("#batchRoleDelete").click(function(){
+            var $chs = $(".batch-checked-item:checked");
+            if($chs.length == 0){
+                toastr.warning("您没有选中要删除的数据！");
+                return;
+            }
+            var advIds = [];
+            for(var i=0;i<$chs.length;i++){
+                var v = $($chs[i]).val();
+                if(v == "on") continue;
+                advIds.push(v);
+            }
+            roleIds = advIds.join(",");
+            $('#deleteRoleModel').modal('show');
+        });
     })
 </script>

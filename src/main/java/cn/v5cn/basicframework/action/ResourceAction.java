@@ -66,13 +66,13 @@ public class ResourceAction {
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ImmutableMap<String, String> resEdit(SystemRes systemRes) {
         if (systemRes.getId() != null) {
-            Long result = systemResService.updateSystemRes(systemRes);
+            int result = systemResService.updateSystemRes(systemRes);
             if (result < 1) {
                 return ImmutableMap.of("status", "0", "message", getMessage("resource.updatefailed.message"));
             }
             return ImmutableMap.of("status", "1", "message", getMessage("resource.updatesuccess.message"));
         }
-        Long result = systemResService.addSystemRes(systemRes);
+        int result = systemResService.addSystemRes(systemRes);
         if (result < 1) {
             return ImmutableMap.of("status", "0", "message", getMessage("resource.addfailed.message"));
         }
@@ -86,7 +86,7 @@ public class ResourceAction {
         if (count > 0) {
             return ImmutableMap.of("status", "0", "message", getMessage("resource.count.message"));
         }
-        Long result = systemResService.deleteSystemRes(resId);
+        int result = systemResService.deleteSystemRes(resId);
         if (result < 1) {
             return ImmutableMap.of("status", "0", "message", getMessage("resource.deletefailed.message"));
         }

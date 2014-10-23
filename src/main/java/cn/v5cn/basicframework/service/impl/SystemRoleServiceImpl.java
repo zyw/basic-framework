@@ -32,9 +32,8 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Override
     @Transactional
     public int addSystemRoleAndRRS(SystemRole systemRole, String resIds) {
-        Long affectedCount = systemRoleDao.addSystemRole(systemRole);
-        if(affectedCount == null || affectedCount < 0
-                || systemRole.getId() == null || systemRole.getId() < 0) return 0;
+        int affectedCount = systemRoleDao.addSystemRole(systemRole);
+        if(affectedCount < 0 || systemRole.getId() == null || systemRole.getId() < 0) return 0;
 
         if(resIds != null && resIds.length() > 0){
             List<SystemRoleRes> rrs = Lists.newArrayList();
@@ -46,8 +45,8 @@ public class SystemRoleServiceImpl implements SystemRoleService {
                 rr.setRes_id(Long.valueOf(resId));
                 rrs.add(rr);
             }
-            Long result = systemRoleResService.addRoleResBatch(rrs);
-            if(result == null || result < 1)
+            int result = systemRoleResService.addRoleResBatch(rrs);
+            if(result < 1)
                 return 0;
         }
         return 1;
@@ -75,7 +74,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         int roleUpdate = systemRoleDao.updateSystemRole(systemRole);
         if(roleUpdate < 1) return 0;
 
-        Long deleteResult = systemRoleResService.deleteByRoleId(systemRole.getId());
+        int deleteResult = systemRoleResService.deleteByRoleId(systemRole.getId());
 
         if(resIds != null && resIds.length() > 0){
             List<SystemRoleRes> rrs = Lists.newArrayList();
@@ -87,8 +86,8 @@ public class SystemRoleServiceImpl implements SystemRoleService {
                 rr.setRes_id(Long.valueOf(resId));
                 rrs.add(rr);
             }
-            Long result = systemRoleResService.addRoleResBatch(rrs);
-            if(result == null || result < 1)
+            int result = systemRoleResService.addRoleResBatch(rrs);
+            if(result < 1)
                 return 0;
         }
         return 1;
@@ -102,5 +101,13 @@ public class SystemRoleServiceImpl implements SystemRoleService {
         if(resIds != null && resIds.size() > 0)
             resIdsStr = Joiner.on(",").join(resIds);
         return new TupleTwo<SystemRole, String>(role,resIdsStr);
+    }
+
+    @Override
+    @Transactional
+    public int batchDeleteSystemRole(Long[] roleIds) {
+        systemRoleResService.batchDeleteByRoleIds(roleIds);
+
+        return systemRoleDao.batchDeleteSystemRole(roleIds);
     }
 }

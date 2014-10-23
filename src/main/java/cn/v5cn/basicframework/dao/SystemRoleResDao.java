@@ -10,7 +10,9 @@ import java.util.List;
  */
 @Repository
 public interface SystemRoleResDao {
-    Long addRoleResBatch(List<SystemRoleRes> rrs);
+    int addRoleResBatch(List<SystemRoleRes> rrs);
     List<Long> findByResIdRoleId(Long roleId);
-    Long deleteByRoleId(Long roleId);
+    int deleteByRoleId(Long roleId);
+    int deleteByResId(Long resId);
+    int batchDeleteByRoleIds(Long[] roleIds);
 }

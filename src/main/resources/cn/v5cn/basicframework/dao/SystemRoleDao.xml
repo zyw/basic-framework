@@ -27,4 +27,11 @@
     <update id="updateSystemRole">
         update system_role set name=#{name},sortNum=#{sortNum},available=#{available},des=#{des} where id=#{id}
     </update>
+    <delete id="batchDeleteSystemRole">
+        delete from system_role where id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

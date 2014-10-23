@@ -79,4 +79,15 @@ public class RoleAction {
         }
         return ImmutableMap.of("status","0","message",getMessage("role.updatefailed.message"));
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public ImmutableMap<String,String> deleteRoles(Long[] roleIds){
+        if(roleIds == null || roleIds.length < 1)
+            return ImmutableMap.of("status","-1","message",getMessage("role.deletenodata.message"));
+        int result = systemRoleService.batchDeleteSystemRole(roleIds);
+        if(result != 0)
+            return ImmutableMap.of("status","1","message",getMessage("role.deletesuccess.message"));
+        return ImmutableMap.of("status","0","message",getMessage("role.deletefailed.message"));
+    }
 }

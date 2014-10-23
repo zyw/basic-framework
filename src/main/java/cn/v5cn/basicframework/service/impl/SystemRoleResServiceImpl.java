@@ -18,7 +18,7 @@ public class SystemRoleResServiceImpl implements SystemRoleResService {
     private SystemRoleResDao systemRoleResDao;
 
     @Override
-    public Long addRoleResBatch(List<SystemRoleRes> rrs) {
+    public int addRoleResBatch(List<SystemRoleRes> rrs) {
         return systemRoleResDao.addRoleResBatch(rrs);
     }
 
@@ -28,7 +28,17 @@ public class SystemRoleResServiceImpl implements SystemRoleResService {
     }
 
     @Override
-    public Long deleteByRoleId(Long roleId) {
+    public int deleteByRoleId(Long roleId) {
         return systemRoleResDao.deleteByRoleId(roleId);
+    }
+
+    @Override
+    public int deleteByResId(Long resId) {
+        return systemRoleResDao.deleteByResId(resId);
+    }
+
+    @Override
+    public int batchDeleteByRoleIds(Long[] roleIds) {
+        return systemRoleResDao.batchDeleteByRoleIds(roleIds);
     }
 }

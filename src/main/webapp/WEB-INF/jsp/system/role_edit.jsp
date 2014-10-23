@@ -136,10 +136,6 @@
         $.fn.zTree.init($("#resTree"), setting);
 
         v5Util.activeNav("systemManager","角色管理");
-        $(":radio").iCheck({
-            checkboxClass: 'icheckbox_flat-red',
-            radioClass: 'iradio_flat-red'
-        });
 //        $("#rtype").chosen({disable_search_threshold: 10});
         $("#roleForm").validate({
             rules: {

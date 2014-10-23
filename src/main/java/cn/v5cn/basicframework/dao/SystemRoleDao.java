@@ -11,7 +11,7 @@ import java.util.List;
  */
 @Repository
 public interface SystemRoleDao {
-    Long addSystemRole(SystemRole systemRole);
+    int addSystemRole(SystemRole systemRole);
     List<SystemRole> listRoleByName(
                                     @Param("role")SystemRole role,
                                     @Param("offset")Integer offset,
@@ -19,4 +19,5 @@ public interface SystemRoleDao {
     int listRoleCountByName(SystemRole role);
     SystemRole findByRoleId(Long roleId);
     int updateSystemRole(SystemRole systemRole);
+    int batchDeleteSystemRole(Long[] roleIds);
 }

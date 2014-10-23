@@ -108,10 +108,6 @@
 <script type="text/javascript">
     $(function(){
         v5Util.activeNav("systemManager","资源管理");
-        $(":radio").iCheck({
-            checkboxClass: 'icheckbox_flat-red',
-            radioClass: 'iradio_flat-red'
-        });
         $("#rtype").chosen({disable_search_threshold: 10});
         $("#resForm").validate({
             rules: {

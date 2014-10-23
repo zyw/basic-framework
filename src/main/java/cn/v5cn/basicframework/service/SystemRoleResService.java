@@ -8,7 +8,9 @@ import java.util.List;
  * Created by ZYW on 2014/10/17.
  */
 public interface SystemRoleResService {
-    Long addRoleResBatch(List<SystemRoleRes> rrs);
+    int addRoleResBatch(List<SystemRoleRes> rrs);
     List<Long> findByResIdRoleId(Long roleId);
-    Long deleteByRoleId(Long roleId);
+    int deleteByRoleId(Long roleId);
+    int deleteByResId(Long resId);
+    int batchDeleteByRoleIds(Long[] roleIds);
 }

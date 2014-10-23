@@ -154,15 +154,31 @@ $.extend($.validator.messages, {
                     })
                 })
             }
+        },
+        indexInit:function(){
+            v5Util.countUp(495,'count');
+            v5Util.countUp(947,'count2');
+            v5Util.countUp(328,'count3');
+            v5Util.countUp(10328,'count4');
         }
     };
     window.v5Util = v5Util;
 })( window , jQuery );
 
-v5Util.countUp(495,'count');
-v5Util.countUp(947,'count2');
-v5Util.countUp(328,'count3');
-v5Util.countUp(10328,'count4');
+$(function(){
+    v5Util.indexInit();
+    $("input[type='checkbox'], input[type='radio']").iCheck({
+        checkboxClass: 'icheckbox_minimal',
+        radioClass: 'iradio_minimal'
+    });
+    $("#batchChecked").on('ifChecked', function(event){
+        $('.batch-checked-item').iCheck('check');
+    });
+    $("#batchChecked").on('ifUnchecked', function(event){
+        $('.batch-checked-item').iCheck('uncheck');
+    });
+});
+
 var Script = function () {
 
 //    $.validator.setDefaults({

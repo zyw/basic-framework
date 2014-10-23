@@ -20,4 +20,14 @@
     <delete id="deleteByRoleId">
         delete from system_role_res where role_id=#{roleId}
     </delete>
+    <delete id="deleteByResId">
+        delete from system_role_res where res_id=#{resId}
+    </delete>
+    <delete id="batchDeleteByRoleIds">
+        delete from system_role_res where role_id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

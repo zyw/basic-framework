@@ -3,9 +3,11 @@ package cn.v5cn.basicframework.service.impl;
 import cn.v5cn.basicframework.dao.SystemResDao;
 import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.service.SystemResService;
+import cn.v5cn.basicframework.service.SystemRoleResService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,18 +20,25 @@ public class SystemResServiceImpl implements SystemResService {
     @Autowired
     private SystemResDao systemResDao;
 
+    @Autowired
+    private SystemRoleResService systemRoleResService;
+
     @Override
-    public Long addSystemRes(SystemRes systemRes) {
+    @Transactional
+    public int addSystemRes(SystemRes systemRes) {
         return systemResDao.addSystemRes(systemRes);
     }
 
     @Override
-    public Long updateSystemRes(SystemRes systemRes) {
+    @Transactional
+    public int updateSystemRes(SystemRes systemRes) {
         return systemResDao.updateSystemRes(systemRes);
     }
 
     @Override
-    public Long deleteSystemRes(Long resId) {
+    @Transactional
+    public int deleteSystemRes(Long resId) {
+        systemRoleResService.deleteByResId(resId);
         return systemResDao.deleteSystemRes(resId);
     }
 
