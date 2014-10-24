@@ -147,7 +147,7 @@
                 <%--}--%>
             <%--});--%>
         <%--}--%>
-        <%--v5Util.activeNav("systemManager","角色管理");--%>
+        v5Util.activeNav("systemManager","用户管理");
 
         $("#editUser").click(function(){
             location.href="<c:url value="/user/edit/0"/>";
