@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SystemUserDao {
     SystemUser findByUserName(String userName);
+    int addSystemUser(SystemUser user);
 }

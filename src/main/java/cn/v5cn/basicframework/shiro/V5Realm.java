@@ -28,7 +28,7 @@ public class V5Realm extends AuthorizingRealm {
         if(user == null){
             throw new UnknownAccountException();
         }
-        if(user.getStatus() == 2){
+        if(user.getAvailable() == 2){
             throw new LockedAccountException();
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

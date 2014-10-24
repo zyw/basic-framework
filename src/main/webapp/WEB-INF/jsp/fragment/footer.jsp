@@ -178,7 +178,8 @@
 <script src="<c:url value='/r/js/jquery.validate.min.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/jquery.multi-select.js'/>" type="text/javascript"></script>
 <script src="<c:url value='/r/js/jquery.ztree.core-3.5.min.js'/>" type="text/javascript"></script>
-<script src="<c:url value='/r/js/respond.min.js'/>" ></script>
+<script src="<c:url value='/r/js/respond.min.js'/>" type="text/javascript"></script>
+<script src="<c:url value='/r/js/holder.js'/>" type="text/javascript"></script>
 
 <!--common script for all pages-->
 <script src="<c:url value='/r/js/common-scripts.js'/>"></script>

@@ -9,9 +9,9 @@
     </select>
     <select id="findByResId" resultType="Resource">
         select * from sys_resource where id=#{resId}
-    </select>
-    <insert id="addRes">
-        insert into sys_resource(name, type, url, permission, parent_id, parent_ids, available)
-        values(#{name},#{type},#{url},#{permission},#{parent_Id},#{parent_Ids},1)
-    </insert>-->
+    </select>-->
+    <insert id="addSystemUser">
+        insert into system_user(loginname,password,name,email,sex,mobilephone,originalPic,available)
+        values(#{loginname},#{password},#{name},#{email},#{sex},#{mobilephone},#{originalPic},#{available})
+    </insert>
 </mapper>

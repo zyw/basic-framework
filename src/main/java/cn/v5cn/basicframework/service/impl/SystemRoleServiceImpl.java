@@ -110,4 +110,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
         return systemRoleDao.batchDeleteSystemRole(roleIds);
     }
+
+    @Override
+    public List<SystemRole> findAll() {
+        return systemRoleDao.findAll();
+    }
 }

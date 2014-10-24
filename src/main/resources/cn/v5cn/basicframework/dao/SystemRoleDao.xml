@@ -20,6 +20,9 @@
     <select id="findByRoleId" resultType="SystemRole">
         select * from system_role where id=#{roleId}
     </select>
+    <select id="findAll" resultType="SystemRole">
+        select * from system_role
+    </select>
      <insert id="addSystemRole" useGeneratedKeys="true" keyProperty="id">
          insert into system_role(name, sortNum, available, des)
          values(#{name},#{sortNum}, #{available}, #{des})

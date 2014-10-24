@@ -12,11 +12,12 @@ public class SystemUser implements Serializable {
     private String salt;            //加密盐
     private String name;
     private String email;
+    private Integer sex;            //1:男，0:女
     private String mobilephone; //移动电话
     private Integer loginCount;         //登录次数
     private String lastLoginTime;    //最后登录时间',
     private String originalPic;      //头像',
-    private Integer status;             //#1 不在线 2.封号状态 ',
+    private Integer available;             //#1 不在线 2.封号状态 ',
 
     public Long getId() {
         return id;
@@ -66,6 +67,14 @@ public class SystemUser implements Serializable {
         this.email = email;
     }
 
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
     public String getMobilephone() {
         return mobilephone;
     }
@@ -98,12 +107,12 @@ public class SystemUser implements Serializable {
         this.originalPic = originalPic;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getAvailable() {
+        return available;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setAvailable(Integer available) {
+        this.available = available;
     }
 
     @Override
@@ -115,11 +124,12 @@ public class SystemUser implements Serializable {
                 ", salt='" + salt + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", sex='" + sex + '\'' +
                 ", mobilephone='" + mobilephone + '\'' +
                 ", loginCount=" + loginCount +
                 ", lastLoginTime='" + lastLoginTime + '\'' +
                 ", originalPic='" + originalPic + '\'' +
-                ", status=" + status +
+                ", available=" + available +
                 '}';
     }
 }

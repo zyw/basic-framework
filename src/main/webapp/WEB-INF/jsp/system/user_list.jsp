@@ -149,9 +149,9 @@
         <%--}--%>
         <%--v5Util.activeNav("systemManager","角色管理");--%>
 
-        <%--$("#editRole").click(function(){--%>
-            <%--location.href="<c:url value="/role/edit/0"/>";--%>
-        <%--});--%>
+        $("#editUser").click(function(){
+            location.href="<c:url value="/user/edit/0"/>";
+        });
         <%--$("#deleteSearchTxt").click(function(){--%>
             <%--$("#roleSearch").val("");--%>
             <%--$("#roleSearchForm").submit();--%>

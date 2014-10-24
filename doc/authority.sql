@@ -30,11 +30,12 @@ CREATE TABLE SYSTEM_USER
 	salt VARCHAR(100),
 	NAME         VARCHAR(100) NOT NULL,
 	email        VARCHAR(100) NOT NULL,
+	sex int(1) DEFAULT '1' COMMENT '1:男，0:女',
 	mobilephone          VARCHAR(11)							COMMENT '移动电话',
 	loginCount          INT					DEFAULT 0		COMMENT '登录次数',
 	lastLoginTime        DATETIME								COMMENT '最后登录时间',
 	originalPic          VARCHAR(200)							COMMENT '头像',
-	STATUS INT(1) DEFAULT '1' COMMENT '#1 不在线 2.封号状态 ',
+	available INT(1) DEFAULT '1' COMMENT '#1 不在线 2.封号状态 ',
 	PRIMARY KEY (id)
 )ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;
 

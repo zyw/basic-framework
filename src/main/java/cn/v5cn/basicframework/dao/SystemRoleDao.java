@@ -20,4 +20,5 @@ public interface SystemRoleDao {
     SystemRole findByRoleId(Long roleId);
     int updateSystemRole(SystemRole systemRole);
     int batchDeleteSystemRole(Long[] roleIds);
+    List<SystemRole> findAll();
 }

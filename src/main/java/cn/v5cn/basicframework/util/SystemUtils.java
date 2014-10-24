@@ -1,16 +1,22 @@
 package cn.v5cn.basicframework.util;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ZYW on 2014/7/18.
  */
 public class SystemUtils {
+
+    public static final String AVATAR_PATH = "/WEB-INF/upload/avatar";
+
+    public static final List<String> IMG_EXT_NAMES = Lists.newArrayList(".png",".jpg",".gif");
 
     public static String getFileNameExt(String fileName){
         if(fileName == null || StringUtils.isEmpty(fileName)){

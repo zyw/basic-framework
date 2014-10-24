@@ -22,7 +22,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <mvc:resources mapping="/r/**" location="/WEB-INF/res/"/>
+    <mvc:resources mapping="/r/**" location="/WEB-INF/res/,/WEB-INF/upload/"/>
 
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
