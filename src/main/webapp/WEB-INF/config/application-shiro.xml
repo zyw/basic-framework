@@ -26,9 +26,8 @@
         <property name="credentialsMatcher">
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="MD5"/>
-                <!--加密次数
-                <property name="hashIterations" value="5"/>
-                -->
+                <!--加密次数-->
+                <property name="hashIterations" value="2"/>
             </bean>
         </property>
     </bean>

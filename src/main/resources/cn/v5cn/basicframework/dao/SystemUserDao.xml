@@ -4,14 +4,32 @@
     <select id="findByUserName" resultType="SystemUser">
         select * from system_user where loginname=#{userName}
     </select>
-<!--    <select id="findAll" resultType="Resource">
-        select * from sys_resource order by concat(parent_ids, id) asc
+    <select id="listUserByName" resultType="SystemUser">
+        select * from system_user where 1=1
+        <if test="user.name != null">
+            and name like "%"#{user.name}"%"
+            or loginname like "%"#{user.name}"%"
+            or email like "%"#{user.name}"%"
+        </if>
+        order by id asc
+        limit #{offset},#{rows}
     </select>
-    <select id="findByResId" resultType="Resource">
-        select * from sys_resource where id=#{resId}
-    </select>-->
-    <insert id="addSystemUser">
-        insert into system_user(loginname,password,name,email,sex,mobilephone,originalPic,available)
-        values(#{loginname},#{password},#{name},#{email},#{sex},#{mobilephone},#{originalPic},#{available})
+    <select id="listUserCountByName" resultType="int">
+        select count(*) from system_user where 1=1
+        <if test="name != null">
+            and name like "%"#{name}"%"
+            or loginname like "%"#{name}"%"
+            or email like "%"#{name}"%"
+        </if>
+    </select>
+    <select id="findUserById" resultType="SystemUser">
+        select * from system_user where id=#{userId}
+    </select>
+    <insert id="addSystemUser" useGeneratedKeys="true" keyProperty="id">
+        insert into system_user(loginname,password,salt,name,email,sex,mobilephone,originalPic,available)
+        values(#{loginname},#{password},#{salt},#{name},#{email},#{sex},#{mobilephone},#{originalPic},#{available})
     </insert>
+    <update id="updateLoginCountAndTime" parameterType="SystemUser">
+        update system_user set loginCount=#{loginCount},lastLoginTime=#{lastLoginTime} where id=#{id}
+    </update>
 </mapper>

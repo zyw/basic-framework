@@ -167,6 +167,26 @@ $.extend($.validator.messages, {
             v5Util.countUp(947,'count2');
             v5Util.countUp(328,'count3');
             v5Util.countUp(10328,'count4');
+        },
+        searchOpt:function(formId,inputId,IconId){
+            $("#"+IconId).click(function(){
+                $("#"+inputId).val("");
+                $("#"+formId).submit();
+                $("#"+IconId).css("display","none");
+            });
+            $("#"+inputId).keyup(function(e){
+                if(13 === e.keyCode){
+                    $("#"+formId).submit();
+                }else{
+                    if($.trim($(this).val()) === "")
+                        $("#"+IconId).css("display","none");
+                    else
+                        $("#"+IconId).css("display","block");
+                }
+            });
+
+            if($.trim($("#"+inputId).val()) !== "")
+                $("#"+IconId).css("display","block");
         }
     };
     window.v5Util = v5Util;

@@ -3,8 +3,10 @@ package cn.v5cn.basicframework.action;
 import cn.v5cn.basicframework.entity.SystemUser;
 import cn.v5cn.basicframework.service.SystemUserService;
 import cn.v5cn.basicframework.util.HttpUtils;
+import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.SystemUtils;
 import com.google.common.collect.ImmutableMap;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 
@@ -30,8 +33,23 @@ public class UserAction {
     @Autowired
     private SystemUserService systemUserService;
 
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    public String userList(){
+    @RequestMapping(value = "/list/{p}",method = {RequestMethod.POST,RequestMethod.GET})
+    public String userList(SystemUser user,@PathVariable Integer p,HttpSession session,HttpServletRequest request,ModelMap modelMap){
+        if(user != null && !StringUtils.isBlank(user.getName())){
+            session.setAttribute("userSearch",user);
+            modelMap.addAttribute("searchTxt",user.getName());
+        }else{
+            session.setAttribute("userSearch",null);
+        }
+        Object searchObj = session.getAttribute("userSearch");
+        Pagination<SystemUser> result = null;
+        if(searchObj != null){
+            result = systemUserService.listUserByName(((SystemUser) searchObj), p);
+        }else{
+            result = systemUserService.listUserByName(new SystemUser(), p);
+        }
+        modelMap.addAttribute("pagination", SystemUtils.pagination(result, HttpUtils.getContextPath(request)+"/user/list"));
+        modelMap.addAttribute("users",result.getData());
         return "system/user_list";
     }
 
@@ -40,6 +58,10 @@ public class UserAction {
         if(userId == null || userId == 0){
             modelMap.addAttribute("user",new SystemUser());
             modelMap.addAttribute("roles",systemUserService.findAllRolesAndIsSelected(null));
+        }else{
+            SystemUser result = systemUserService.findUserById(userId);
+            modelMap.addAttribute("user",result);
+            modelMap.addAttribute("roles",systemUserService.findAllRolesAndIsSelected(userId));
         }
         return "system/user_edit";
     }
@@ -75,6 +97,10 @@ public class UserAction {
         System.out.println(roleIds[0] + "===================");
         System.out.println(user+"+++++++++++++++++++");
         System.out.println(user.getName()+"+++++++++++++++++++");
-        return ImmutableMap.of("ddd","ddd");
+        int result = systemUserService.addSystemUserAndURS(user,roleIds);
+        if(result == 1){
+            return ImmutableMap.of("status","1","message",getMessage("user.addsuccess.message"));
+        }
+        return ImmutableMap.of("status","0","message",getMessage("user.addfailed.message"));
     }
 }

@@ -11,7 +11,7 @@
          <!--select res_id from system_role_res where role_id=#{roleId}-->
      <!--</select>-->
      <insert id="addUserRoleBatch" parameterType="list">
-         insert into system_role_res(user_id, role_id)
+         insert into system_user_role(user_id, role_id)
          values
          <foreach collection="list" item="item" index="index" separator=",">
           (#{item.user_id},#{item.role_id})

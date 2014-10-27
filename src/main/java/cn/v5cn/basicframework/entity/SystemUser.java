@@ -1,6 +1,9 @@
 package cn.v5cn.basicframework.entity;
 
+import org.joda.time.DateTime;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by ZYW on 2014/10/11.
@@ -15,7 +18,7 @@ public class SystemUser implements Serializable {
     private Integer sex;            //1:男，0:女
     private String mobilephone; //移动电话
     private Integer loginCount;         //登录次数
-    private String lastLoginTime;    //最后登录时间',
+    private Date lastLoginTime;    //最后登录时间',
     private String originalPic;      //头像',
     private Integer available;             //#1 不在线 2.封号状态 ',
 
@@ -91,11 +94,11 @@ public class SystemUser implements Serializable {
         this.loginCount = loginCount;
     }
 
-    public String getLastLoginTime() {
+    public Date getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(String lastLoginTime) {
+    public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 
@@ -127,7 +130,7 @@ public class SystemUser implements Serializable {
                 ", sex='" + sex + '\'' +
                 ", mobilephone='" + mobilephone + '\'' +
                 ", loginCount=" + loginCount +
-                ", lastLoginTime='" + lastLoginTime + '\'' +
+                ", lastLoginTime='" + new DateTime(lastLoginTime).toString("YYYY-MM-dd HH:mm:ss") + '\'' +
                 ", originalPic='" + originalPic + '\'' +
                 ", available=" + available +
                 '}';

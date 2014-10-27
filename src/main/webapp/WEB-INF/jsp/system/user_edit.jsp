@@ -31,36 +31,42 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="uname">用户名</label>
                             <div class="col-lg-10">
-                                <input type="hidden" name="id" id="id" value="">
-                                <input type="text" name="name" id="uname" value="" class="form-control" required>
+                                <input type="hidden" name="id" id="id" value="${user.id}">
+                                <input type="text" name="name" id="uname" value="${user.name}" class="form-control" required>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="loginname">登录名</label>
                             <div class="col-lg-10">
-                                <input type="text" name="loginname" id="loginname" class="form-control" placeholder="登录名" value="" required>
+                                <input type="text" name="loginname" id="loginname" class="form-control" placeholder="登录名" value="${user.loginname}" required>
                                 <span class="help-block">请使用英文字母、数字和特殊符合。</span>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="password">密码</label>
                             <div class="col-lg-10">
-                                <input type="password" name="password" id="password" class="form-control" placeholder='密码' value="" required>
+                                <input type="password" name="password" id="password" class="form-control" placeholder='密码' required>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="control-label col-lg-2" for="affirmPassword">确认密码</label>
+                            <div class="col-lg-10">
+                                <input type="password" name="affirmPassword" id="affirmPassword" class="form-control" placeholder='确认密码' required>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="email">Email</label>
                             <div class="col-lg-10">
-                                <input type="email" name="email" id="email" class="form-control" placeholder="邮箱" value="" required>
+                                <input type="email" name="email" id="email" class="form-control" placeholder="邮箱" value="${user.email}" required>
                             </div>
                         </div>
                         <div class="form-group ">
                             <label class="control-label col-lg-2">性别</label>
                             <div class="col-lg-10">
                                 <label class="checkbox-inline" style="padding-left:0;">
-                                    <input type="radio" name="sex" value="1" id="sex1" checked>
+                                    <input type="radio" name="sex" value="1" id="sex1" <c:if test="${empty user.sex or user.sex eq 1}">checked</c:if>>
                                     <label for="available1">男</label>
-                                    <input type="radio" name="sex" value="0" id="sex0">
+                                    <input type="radio" name="sex" value="0" id="sex0" <c:if test="${user.sex eq 0}">checked</c:if>>
                                     <label for="available0">女</label>
                                 </label>
                             </div>
@@ -68,7 +74,7 @@
                         <div class="form-group ">
                             <label class="control-label col-lg-2" for="mobilephone">手机</label>
                             <div class="col-lg-10">
-                                <input type="text" name="mobilephone" id="mobilephone" class="form-control" placeholder="手机" value="">
+                                <input type="text" name="mobilephone" id="mobilephone" class="form-control" placeholder="手机" value="${user.mobilephone}">
                                 <span class="help-block">对资源进行排序，越小越靠前。</span>
                             </div>
                         </div>
@@ -76,9 +82,9 @@
                             <label class="control-label col-lg-2">状态</label>
                             <div class="col-lg-10">
                                 <label class="checkbox-inline" style="padding-left:0;">
-                                    <input type="radio" name="available" value="1" id="available1" checked>
+                                    <input type="radio" name="available" value="1" id="available1" <c:if test="${empty user.available or user.available eq 1}">checked</c:if>>
                                     <label for="available1">可用</label>
-                                    <input type="radio" name="available" value="0" id="available0">
+                                    <input type="radio" name="available" value="0" id="available0" <c:if test="${user.available eq 0}">checked</c:if>>
                                     <label for="available0">禁用</label>
                                 </label>
 
@@ -89,7 +95,14 @@
                             <div class="col-lg-10">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img data-src="holder.js/100%x100%/vine/text:选择图片" alt="选择图片"/>
+                                        <c:choose>
+                                            <c:when test="${empty user.originalPic or user.originalPic eq 'avatar0.jpg' or user.originalPic eq 'avatar1.jpg'}">
+                                                <img data-src="holder.js/100%x100%/vine/text:选择图片" alt="选择图片"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <img src="<c:url value="/r/avatar/${user.originalPic}"/>" alt=""/>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
                                     <div>

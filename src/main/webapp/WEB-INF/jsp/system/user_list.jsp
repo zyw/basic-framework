@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="../fragment/header.jsp"/>
 <div class="row">
@@ -39,13 +40,13 @@
             </header>
             <div class="panel-body">
                 <div class="col-lg-5 col-lg-offset-7">
-                    <form id="roleSearchForm" class="form-horizontal" method="post" action="<c:url value="/role/list/1"/>" role="form">
+                    <form id="userSearchForm" class="form-horizontal" method="post" action="<c:url value="/user/list/1"/>" role="form">
                         <div class="form-group">
-                            <label for="roleSearch" class="col-lg-2 col-sm-6 control-label" style="text-align: right;padding-right: 0px;">查询：</label>
+                            <label for="userSearch" class="col-lg-2 col-sm-6 control-label" style="text-align: right;padding-right: 0px;">查询：</label>
                             <div class="col-lg-10 col-sm-6" style="padding-right: 0;">
                                 <div class="iconic-input right">
                                     <i class="fa fa-times" style="color:#000;font-size: 18px;display: none;" id="deleteSearchTxt"></i>
-                                    <input type="text" class="form-control" id="roleSearch" name="name" placeholder="查询" value="${searchTxt}">
+                                    <input type="text" class="form-control" id="userSearch" name="name" placeholder="查询" value="${searchTxt}">
                                 </div>
                             </div>
                         </div>
@@ -55,53 +56,95 @@
                 <table class="table table-striped table-bordered table-advance table-hover">
                     <colgroup>
                         <col class="col-xs-1 v5-col-xs-1">
-                        <col class="col-xs-2">
-                        <col class="col-xs-3">
                         <col class="col-xs-1">
                         <col class="col-xs-1">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
                         <col class="col-xs-2">
+                        <col class="col-xs-1">
+                        <col class="col-xs-1">
                     </colgroup>
                     <thead>
                     <tr>
                         <th class="v5-td-center">
                             <input type="checkbox" id="batchChecked"/>
                         </th>
+                        <th><i class="fa fa-meh-o"></i> 头像</th>
                         <th><i class="fa fa-bullhorn"></i> 名称</th>
-                        <th class="hidden-phone"><i class="fa fa-question-circle"></i> 描述</th>
-                        <th><i class="fa fa-bookmark"></i> 排序</th>
+                        <th><i class="fa fa-rocket"></i> 登录名</th>
+                        <th><i class="fa fa-envelope"></i> Email</th>
+                        <th><i class="fa fa-female"></i> 性别</th>
+                        <th><i class="fa fa-mobile-phone"></i> 电话</th>
+                        <th><i class="fa fa-bookmark"></i> 登录次数</th>
+                        <th><i class="fa fa-calendar"></i> 登录时间</th>
                         <th><i class="fa fa-edit"></i> 状态</th>
                         <th><i class="fa fa-gear"></i> 操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <%--<c:forEach items="${roles}" var="role">--%>
-                        <%--<tr>--%>
-                            <%--<td class="v5-td-center">--%>
-                                <%--<input type="checkbox" class="batch-checked-item" value="${role.id}"/>--%>
-                            <%--</td>--%>
-                            <%--<td>${role.name}</td>--%>
-                            <%--<td>${role.des}</td>--%>
-                            <%--<td>${role.sortNum}</td>--%>
-                            <%--<td>--%>
-                                <%--<c:if test="${role.available eq 1}">--%>
-                                    <%--<span class="badge bg-success">可用</span>--%>
-                                <%--</c:if>--%>
-                                <%--<c:if test="${role.available eq 0}">--%>
-                                    <%--<span class="badge bg-important">禁用</span>--%>
-                                <%--</c:if>--%>
-                            <%--</td>--%>
-                            <%--<td>--%>
-                                    <%--&lt;%&ndash;<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>&ndash;%&gt;--%>
-                                <%--<a href="<c:url value="/role/edit/${role.id}"/>" data-toggle="tooltip" data-placement="top"--%>
-                                   <%--title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>--%>
-                                <%--<a href="javascript:;" data-roleid="${role.id}" data-toggle="tooltip" data-placement="top"--%>
-                                   <%--title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>--%>
-                            <%--</td>--%>
-                        <%--</tr>--%>
-                    <%--</c:forEach>--%>
+                    <c:forEach items="${users}" var="user">
+                        <tr>
+                            <td class="v5-td-center">
+                                <input type="checkbox" class="batch-checked-item" value="${user.id}"/>
+                            </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${empty user.originalPic or user.originalPic eq 'avatar0.jpg' or user.originalPic eq 'avatar1.jpg'}">
+                                        <img src="<c:url value="/r/images/avatar/${empty user.originalPic ? 'avatar1.jpg': user.originalPic}"/>"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <img width="19" height="19" src="<c:url value="/r/avatar/${empty user.originalPic ? 'avatar1.jpg': user.originalPic}"/>"/>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>${user.name}</td>
+                            <td>${user.loginname}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${user.sex eq 1}">
+                                        <span class="label label-primary">男</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="label label-info">女</span>
+                                    </c:otherwise>
+                                </c:choose>
+                                <%--<c:if test="${user.sex eq 1}">
+                                    <span class="badge bg-success">男</span>
+                                </c:if>
+                                <c:if test="${user.sex eq 0}">
+                                    <span class="badge bg-important">女</span>
+                                </c:if>--%>
+                            </td>
+                            <td>${user.mobilephone}</td>
+                            <td>${user.loginCount}</td>
+                            <td><fmt:formatDate value="${user.lastLoginTime}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${user.available eq 1}">
+                                        <span class="badge bg-success">可用</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge bg-important">禁用</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                            <td>
+                                <a href="<c:url value="/user/edit/${user.id}"/>" data-toggle="tooltip" data-placement="top"
+                                   title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                <a href="javascript:;" data-userid="${user.id}" data-toggle="tooltip" data-placement="top"
+                                   title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>
+                                <a href="javascript:;" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                   title="修改密码"><i class="fa fa-edit"></i></a>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
-                <%--${pagination}--%>
+                ${pagination}
             </div>
         </section>
     </div>
@@ -152,24 +195,7 @@
         $("#editUser").click(function(){
             location.href="<c:url value="/user/edit/0"/>";
         });
-        <%--$("#deleteSearchTxt").click(function(){--%>
-            <%--$("#roleSearch").val("");--%>
-            <%--$("#roleSearchForm").submit();--%>
-            <%--$("#deleteSearchTxt").css("display","none");--%>
-        <%--});--%>
-        <%--$("#roleSearch").keyup(function(e){--%>
-            <%--if(13 === e.keyCode){--%>
-                <%--$("#roleSearchForm").submit();--%>
-            <%--}else{--%>
-                <%--if($.trim($(this).val()) === "")--%>
-                    <%--$("#deleteSearchTxt").css("display","none");--%>
-                <%--else--%>
-                    <%--$("#deleteSearchTxt").css("display","block");--%>
-            <%--}--%>
-        <%--});--%>
-
-        <%--if($.trim($("#roleSearch").val()) !== "")--%>
-            <%--$("#deleteSearchTxt").css("display","block");--%>
+        v5Util.searchOpt('userSearchForm','userSearch','deleteSearchTxt');
 
         <%--//待删除的角色ID--%>
         <%--var roleIds = "";--%>

@@ -1,6 +1,7 @@
 package cn.v5cn.basicframework.service;
 
 import cn.v5cn.basicframework.entity.SystemUser;
+import cn.v5cn.basicframework.util.Pagination;
 
 import java.util.List;
 import java.util.Map;
@@ -17,4 +18,8 @@ public interface SystemUserService {
      * 3、isSelected:用户是否包含改角色，1:选中，0:未选中。
      * */
     List<Map<String,String>> findAllRolesAndIsSelected(Long userId);
+    int addSystemUserAndURS(SystemUser user,Long[] roleIds);
+    Pagination<SystemUser> listUserByName(SystemUser role,Integer currPage);
+    int updateLoginCountAndTime(SystemUser user);
+    SystemUser findUserById(Long userId);
 }

@@ -152,24 +152,7 @@
         $("#editRole").click(function(){
             location.href="<c:url value="/role/edit/0"/>";
         });
-        $("#deleteSearchTxt").click(function(){
-            $("#roleSearch").val("");
-            $("#roleSearchForm").submit();
-            $("#deleteSearchTxt").css("display","none");
-        });
-        $("#roleSearch").keyup(function(e){
-            if(13 === e.keyCode){
-                $("#roleSearchForm").submit();
-            }else{
-                if($.trim($(this).val()) === "")
-                    $("#deleteSearchTxt").css("display","none");
-                else
-                    $("#deleteSearchTxt").css("display","block");
-            }
-        });
-
-        if($.trim($("#roleSearch").val()) !== "")
-            $("#deleteSearchTxt").css("display","block");
+        v5Util.searchOpt('roleSearchForm','roleSearch','deleteSearchTxt');
 
         //待删除的角色ID
         var roleIds = "";
