@@ -5,6 +5,7 @@ import cn.v5cn.basicframework.entity.SystemRole;
 import cn.v5cn.basicframework.entity.SystemRoleRes;
 import cn.v5cn.basicframework.service.SystemRoleResService;
 import cn.v5cn.basicframework.service.SystemRoleService;
+import cn.v5cn.basicframework.service.SystemUserRoleService;
 import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.PropertyUtils;
 import cn.v5cn.basicframework.util.TupleTwo;
@@ -28,6 +29,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
 
     @Autowired
     private SystemRoleResService systemRoleResService;
+
+    @Autowired
+    private SystemUserRoleService systemUserRoleService;
 
     @Override
     @Transactional
@@ -107,7 +111,7 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     @Transactional
     public int batchDeleteSystemRole(Long[] roleIds) {
         systemRoleResService.batchDeleteByRoleIds(roleIds);
-
+        systemUserRoleService.batchDeleteByRoleIds(roleIds);
         return systemRoleDao.batchDeleteSystemRole(roleIds);
     }
 
