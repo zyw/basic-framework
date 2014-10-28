@@ -15,4 +15,5 @@ public interface SystemRoleResDao {
     int deleteByRoleId(Long roleId);
     int deleteByResId(Long resId);
     int batchDeleteByRoleIds(Long[] roleIds);
+    List<SystemRoleRes> findByRoleIds(List<Long> roleIds);
 }

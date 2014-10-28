@@ -5,6 +5,7 @@ import cn.v5cn.basicframework.service.SystemUserService;
 import cn.v5cn.basicframework.util.PasswordHelper;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -20,8 +21,14 @@ public class V5Realm extends AuthorizingRealm {
     private SystemUserService systemUserService;
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        String userName = (String)principals.getPrimaryPrincipal();
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        //设置权限
+        authorizationInfo.setRoles(systemUserService.findRoles(userName));
+        authorizationInfo.setStringPermissions(systemUserService.findPermissions(userName));
+
+        return authorizationInfo;
     }
 
     @Override

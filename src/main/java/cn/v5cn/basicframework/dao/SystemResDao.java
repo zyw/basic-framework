@@ -17,4 +17,5 @@ public interface SystemResDao {
     SystemRes findById(Long resId);
     int findByPidCount(Long pid);
     List<SystemRes> findByPid(Long pid);
+    List<SystemRes> findByResIds(List<Long> resIds);
 }

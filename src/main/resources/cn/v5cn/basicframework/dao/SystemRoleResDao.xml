@@ -3,10 +3,14 @@
 <mapper namespace="cn.v5cn.basicframework.dao.SystemRoleResDao">
     <!-- <select id="findByUserName" resultType="SystemUser">
          select * from system_user where loginname=#{userName}
-     </select>
-     <select id="findAll" resultType="Resource">
-         select * from sys_resource order by concat(parent_ids, id) asc
      </select>-->
+     <select id="findByRoleIds" resultType="SystemRoleRes">
+         select * from system_role_res where role_id in
+         <foreach item="item" index="index" collection="list"
+                  open="(" separator="," close=")">
+             #{item}
+         </foreach>
+     </select>
      <select id="findByResIdRoleId" resultType="long">
          select res_id from system_role_res where role_id=#{roleId}
      </select>

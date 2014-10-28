@@ -5,6 +5,7 @@ import cn.v5cn.basicframework.util.Pagination;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by ZYW on 2014/10/11.
@@ -27,4 +28,7 @@ public interface SystemUserService {
     int updateSystemUserAndURS(SystemUser user,Long[] roleIds);
     int batchDeleteSystemUser(Long[] userIds);
     int updatePwd(Long userId,String pwd);
+    //查询权限信息
+    Set<String> findRoles(String userName);
+    Set<String> findPermissions(String userName);
 }

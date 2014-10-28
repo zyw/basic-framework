@@ -20,6 +20,13 @@
     <select id="findByRoleId" resultType="SystemRole">
         select * from system_role where id=#{roleId}
     </select>
+    <select id="findByRoleIds" resultType="SystemRole">
+        select * from system_role where id in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
     <select id="findAll" resultType="SystemRole">
         select * from system_role
     </select>

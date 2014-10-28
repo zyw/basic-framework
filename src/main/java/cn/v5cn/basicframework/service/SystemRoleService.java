@@ -17,4 +17,5 @@ public interface SystemRoleService {
     TupleTwo<SystemRole,String> findSystemRoleAndResIdsByRoleId(Long roleId);
     int batchDeleteSystemRole(Long[] roleIds);
     List<SystemRole> findAll();
+    List<SystemRole> findByRoleIds(List<Long> roleIds);
 }

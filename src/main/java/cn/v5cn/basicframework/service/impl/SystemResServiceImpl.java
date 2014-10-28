@@ -86,4 +86,9 @@ public class SystemResServiceImpl implements SystemResService {
         }
         return reses;
     }
+
+    @Override
+    public List<SystemRes> findByResIds(List<Long> resIds) {
+        return systemResDao.findByResIds(resIds);
+    }
 }

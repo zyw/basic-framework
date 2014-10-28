@@ -41,4 +41,9 @@ public class SystemRoleResServiceImpl implements SystemRoleResService {
     public int batchDeleteByRoleIds(Long[] roleIds) {
         return systemRoleResDao.batchDeleteByRoleIds(roleIds);
     }
+
+    @Override
+    public List<SystemRoleRes> findByRoleIds(List<Long> roleIds) {
+        return systemRoleResDao.findByRoleIds(roleIds);
+    }
 }

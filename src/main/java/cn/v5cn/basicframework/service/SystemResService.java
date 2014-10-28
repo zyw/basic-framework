@@ -16,4 +16,5 @@ public interface SystemResService {
     int findByPidCount(Long pid);
     List<SystemRes> findByPid(Long pid);
     List<SystemRes> findAll(List<SystemRes> reses);
+    List<SystemRes> findByResIds(List<Long> resIds);
 }

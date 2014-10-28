@@ -119,4 +119,9 @@ public class SystemRoleServiceImpl implements SystemRoleService {
     public List<SystemRole> findAll() {
         return systemRoleDao.findAll();
     }
+
+    @Override
+    public List<SystemRole> findByRoleIds(List<Long> roleIds) {
+        return systemRoleDao.findByRoleIds(roleIds);
+    }
 }

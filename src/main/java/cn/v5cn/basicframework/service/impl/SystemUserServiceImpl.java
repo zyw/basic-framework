@@ -1,25 +1,20 @@
 package cn.v5cn.basicframework.service.impl;
 
 import cn.v5cn.basicframework.dao.SystemUserDao;
-import cn.v5cn.basicframework.entity.SystemRole;
-import cn.v5cn.basicframework.entity.SystemUser;
-import cn.v5cn.basicframework.entity.SystemUserRole;
-import cn.v5cn.basicframework.service.SystemRoleService;
-import cn.v5cn.basicframework.service.SystemUserRoleService;
-import cn.v5cn.basicframework.service.SystemUserService;
+import cn.v5cn.basicframework.entity.*;
+import cn.v5cn.basicframework.service.*;
 import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.PasswordHelper;
 import cn.v5cn.basicframework.util.PropertyUtils;
 import cn.v5cn.basicframework.util.TupleTwo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by ZYW on 2014/10/11.
@@ -35,6 +30,12 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Autowired
     private SystemUserRoleService systemUserRoleService;
+
+    @Autowired
+    private SystemRoleResService systemRoleResService;
+
+    @Autowired
+    private SystemResService systemResService;
 
     @Autowired
     private PasswordHelper passwordHelper;
@@ -164,5 +165,47 @@ public class SystemUserServiceImpl implements SystemUserService {
         PasswordHelper passwordHelper = new PasswordHelper();
         TupleTwo<String, String> encrypt = passwordHelper.encrypt(pwd, user.getLoginname());
         return systemUserDao.updatePwd(userId,encrypt.b,encrypt.a);
+    }
+
+    @Override
+    public Set<String> findRoles(String userName) {
+        SystemUser user = this.findByUserName(userName);
+        if(user == null)
+            return Collections.EMPTY_SET;
+        List<SystemUserRole> usreRoles = systemUserRoleService.findByUserId(user.getId());
+        List<Long> roleIds = Lists.newArrayList();
+        for(SystemUserRole userRole : usreRoles){
+            roleIds.add(userRole.getRole_id());
+        }
+        List<SystemRole> roles = systemRoleService.findByRoleIds(roleIds);
+        Set<String> result = Sets.newHashSet();
+        for(SystemRole role : roles){
+            result.add(role.getName());
+        }
+        return result;
+    }
+
+    @Override
+    public Set<String> findPermissions(String userName) {
+        SystemUser user = this.findByUserName(userName);
+        if(user == null)
+            return Collections.EMPTY_SET;
+        List<SystemUserRole> usreRoles = systemUserRoleService.findByUserId(user.getId());
+
+        List<Long> roleIds = Lists.newArrayList();
+        for(SystemUserRole userRole : usreRoles){
+            roleIds.add(userRole.getRole_id());
+        }
+        List<SystemRoleRes> roleReses = systemRoleResService.findByRoleIds(roleIds);
+        List<Long> resIds = Lists.newArrayList();
+        for(SystemRoleRes roleRes : roleReses){
+            resIds.add(roleRes.getRes_id());
+        }
+        List<SystemRes> reses = systemResService.findByResIds(resIds);
+        Set<String> result = Sets.newHashSet();
+        for(SystemRes res : reses){
+            result.add(res.getPermission());
+        }
+        return result;
     }
 }
