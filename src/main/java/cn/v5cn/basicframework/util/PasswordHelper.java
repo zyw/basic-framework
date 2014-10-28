@@ -32,6 +32,9 @@ public class PasswordHelper {
         this.hashIterations = hashIterations;
     }
 
+    /**
+     * @return 返回一个包含两个原始的元组，第一个是生成的盐，第二个是密码
+     * */
     public TupleTwo<String,String> encrypt(String original,String mix){
         String salt = randomNumberGenerator.nextBytes().toHex();
         String pwd = new SimpleHash(algorithmName,

@@ -45,18 +45,33 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
+    public List<SystemUser> findByUserIds(Long[] userIds) {
+        return systemUserDao.findByUserIds(userIds);
+    }
+
+    @Override
     public List<Map<String, String>> findAllRolesAndIsSelected(Long userId) {
         List<Map<String,String>> result = Lists.newArrayList();
-        if(userId == null){
-            List<SystemRole> roles = systemRoleService.findAll();
-            Map<String,String> obj = null;
-            for(SystemRole role : roles){
-                obj = Maps.newHashMap();
-                obj.put("id",role.getId()+"");
-                obj.put("name",role.getName());
-                obj.put("isSelected","0");
-                result.add(obj);
+        List<SystemRole> roles = systemRoleService.findAll();
+        List<Long> roleIds = Lists.newArrayList();
+        if(userId != null && userId != 0){
+            List<SystemUserRole> userRoles = systemUserRoleService.findByUserId(userId);
+
+            for(SystemUserRole userRole : userRoles){
+                roleIds.add(userRole.getRole_id());
             }
+        }
+
+        Map<String,String> obj = null;
+        for(SystemRole role : roles){
+            obj = Maps.newHashMap();
+            obj.put("id",role.getId()+"");
+            obj.put("name",role.getName());
+            if(roleIds.contains(role.getId()))
+                obj.put("isSelected","1");
+            else
+                obj.put("isSelected","0");
+            result.add(obj);
         }
         return result;
     }
@@ -100,6 +115,7 @@ public class SystemUserServiceImpl implements SystemUserService {
     }
 
     @Override
+    @Transactional
     public int updateLoginCountAndTime(SystemUser user) {
         return systemUserDao.updateLoginCountAndTime(user);
     }
@@ -107,5 +123,46 @@ public class SystemUserServiceImpl implements SystemUserService {
     @Override
     public SystemUser findUserById(Long userId) {
         return systemUserDao.findUserById(userId);
+    }
+
+    @Override
+    @Transactional
+    public int updateSystemUserAndURS(SystemUser user, Long[] roleIds) {
+        int userUpdate = systemUserDao.updateSystemUser(user);
+        if(userUpdate < 1) return 0;
+
+        int deleteResult = systemUserRoleService.deleteByUserId(user.getId());
+
+        if(roleIds != null && roleIds.length > 0){
+            List<SystemUserRole> urs = Lists.newArrayList();
+            List<Long> resIdList = Arrays.asList(roleIds);
+            SystemUserRole ur = null;
+            for(Long roleId : resIdList){
+                ur = new SystemUserRole();
+                ur.setUser_id(user.getId());
+                ur.setRole_id(roleId);
+                urs.add(ur);
+            }
+            int result = systemUserRoleService.addUserRoleBatch(urs);
+            if(result < 1)
+                return 0;
+        }
+        return 1;
+    }
+
+    @Override
+    @Transactional
+    public int batchDeleteSystemUser(Long[] userIds) {
+        int deleteUserRole = systemUserRoleService.batchDeleteByUserIds(userIds);
+        int result = systemUserDao.batchDeleteSystemUser(userIds);
+        return result < 1 ? 0 : 1;
+    }
+
+    @Override
+    public int updatePwd(Long userId, String pwd) {
+        SystemUser user = this.findUserById(userId);
+        PasswordHelper passwordHelper = new PasswordHelper();
+        TupleTwo<String, String> encrypt = passwordHelper.encrypt(pwd, user.getLoginname());
+        return systemUserDao.updatePwd(userId,encrypt.b,encrypt.a);
     }
 }

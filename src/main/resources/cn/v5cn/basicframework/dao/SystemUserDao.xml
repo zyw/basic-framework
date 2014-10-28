@@ -4,6 +4,13 @@
     <select id="findByUserName" resultType="SystemUser">
         select * from system_user where loginname=#{userName}
     </select>
+    <select id="findByUserIds" resultType="SystemUser">
+        select * from system_user where id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
     <select id="listUserByName" resultType="SystemUser">
         select * from system_user where 1=1
         <if test="user.name != null">
@@ -32,4 +39,18 @@
     <update id="updateLoginCountAndTime" parameterType="SystemUser">
         update system_user set loginCount=#{loginCount},lastLoginTime=#{lastLoginTime} where id=#{id}
     </update>
+    <update id="updateSystemUser" parameterType="SystemUser">
+        update system_user set loginname=#{loginname},name=#{name},email=#{email},sex=#{sex},
+        mobilephone=#{mobilephone},originalPic=#{originalPic},available=#{available} where id=#{id}
+    </update>
+    <update id="updatePwd">
+        update system_user set password=#{pwd},salt=#{salt} where id=#{userId}
+    </update>
+    <delete id="batchDeleteSystemUser">
+        delete from system_user where id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

@@ -15,7 +15,7 @@
         <ul class="breadcrumb">
             <li><a href="<c:url value="/"/>"><i class="fa fa-home"></i> 首页</a></li>
             <li>系统管理</li>
-            <li><a href="<c:url value="/user/list"/>">用户管理</a></li>
+            <li><a href="<c:url value="/user/list/1"/>">用户管理</a></li>
             <li class="active">用户编辑</li>
         </ul>
         <!--breadcrumbs end -->
@@ -48,7 +48,7 @@
                                 <input type="password" name="password" id="password" class="form-control" placeholder='密码' required>
                             </div>
                         </div>
-                        <div class="form-group ">
+                        <div class="form-group">
                             <label class="control-label col-lg-2" for="affirmPassword">确认密码</label>
                             <div class="col-lg-10">
                                 <input type="password" name="affirmPassword" id="affirmPassword" class="form-control" placeholder='确认密码' required>
@@ -145,6 +145,11 @@
     $(function(){
         v5Util.activeNav("systemManager","用户管理");
         $('#addRole').multiSelect();
+        //如果是修改就移除密码框
+        var updateId = $("#id").val();
+        if(updateId !== null && updateId !== ''){
+            $(":password").parent().parent().remove();
+        }
         $("#userForm").validate({
             rules: {
                 sortNum: {
@@ -159,7 +164,7 @@
                         if(responseText.status === '1'){
                             toastr.success(responseText.message);
                             setTimeout(function(){
-                                location.href="<c:url value="/user/list"/>";
+                                location.href="<c:url value="/user/list/1"/>";
                             },1000);
                             return;
                         }else if(responseText.status === '-1'){

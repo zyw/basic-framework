@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.v5cn.basicframework.dao.SystemUserRoleDao">
-    <!-- <select id="findByUserName" resultType="SystemUser">
-         select * from system_user where loginname=#{userName}
+    <select id="findByUserId" resultType="SystemUserRole">
+         select * from system_user_role where user_id=#{userId}
      </select>
-     <select id="findAll" resultType="Resource">
-         select * from sys_resource order by concat(parent_ids, id) asc
-     </select>-->
+    <!--<select id="findByUserIds" resultType="Resource">-->
+        <!--select * from sys_resource order by concat(parent_ids, id) asc-->
+    <!--</select>-->
      <!--<select id="findByResIdRoleId" resultType="long">-->
          <!--select res_id from system_role_res where role_id=#{roleId}-->
      <!--</select>-->
@@ -17,17 +17,24 @@
           (#{item.user_id},#{item.role_id})
          </foreach>
      </insert>
-    <!--<delete id="deleteByRoleId">-->
-        <!--delete from system_role_res where role_id=#{roleId}-->
-    <!--</delete>-->
+    <delete id="deleteByUserId">
+        delete from system_user_role where user_id=#{userId}
+    </delete>
     <!--<delete id="deleteByResId">-->
         <!--delete from system_role_res where res_id=#{resId}-->
     <!--</delete>-->
-    <!--<delete id="batchDeleteByRoleIds">-->
-        <!--delete from system_role_res where role_id in-->
-        <!--<foreach item="item" index="index" collection="array"-->
-                 <!--open="(" separator="," close=")">-->
-            <!--#{item}-->
-        <!--</foreach>-->
-    <!--</delete>-->
+    <delete id="batchDeleteByUserIds">
+        delete from system_user_role where user_id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="batchDeleteByRoleIds">
+        delete from system_user_role where role_id in
+        <foreach item="item" index="index" collection="array"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
 </mapper>

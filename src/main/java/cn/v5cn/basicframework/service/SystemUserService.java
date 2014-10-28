@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public interface SystemUserService {
     SystemUser findByUserName(String userName);
+    List<SystemUser> findByUserIds(Long[] userIds);
     /**
      * Map中包含三个键值对
      * 1、id:角色的ID
@@ -22,4 +23,8 @@ public interface SystemUserService {
     Pagination<SystemUser> listUserByName(SystemUser role,Integer currPage);
     int updateLoginCountAndTime(SystemUser user);
     SystemUser findUserById(Long userId);
+
+    int updateSystemUserAndURS(SystemUser user,Long[] roleIds);
+    int batchDeleteSystemUser(Long[] userIds);
+    int updatePwd(Long userId,String pwd);
 }

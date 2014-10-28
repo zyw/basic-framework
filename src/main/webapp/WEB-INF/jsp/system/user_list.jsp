@@ -112,12 +112,6 @@
                                         <span class="label label-info">女</span>
                                     </c:otherwise>
                                 </c:choose>
-                                <%--<c:if test="${user.sex eq 1}">
-                                    <span class="badge bg-success">男</span>
-                                </c:if>
-                                <c:if test="${user.sex eq 0}">
-                                    <span class="badge bg-important">女</span>
-                                </c:if>--%>
                             </td>
                             <td>${user.mobilephone}</td>
                             <td>${user.loginCount}</td>
@@ -136,8 +130,8 @@
                                 <a href="<c:url value="/user/edit/${user.id}"/>" data-toggle="tooltip" data-placement="top"
                                    title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
                                 <a href="javascript:;" data-userid="${user.id}" data-toggle="tooltip" data-placement="top"
-                                   title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>
-                                <a href="javascript:;" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                                   title="删除" class="btn btn-danger btn-xs delete-user"><i class="fa fa-trash-o "></i></a>
+                                <a href="javascript:;" data-userid="${user.id}" class="btn btn-success btn-xs update-pwd-user" data-toggle="tooltip" data-placement="top"
                                    title="修改密码"><i class="fa fa-edit"></i></a>
                             </td>
                         </tr>
@@ -149,7 +143,7 @@
         </section>
     </div>
 </div>
-<div class="modal fade" id="deleteRoleModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="deleteUserModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -157,11 +151,41 @@
                 <h4 class="modal-title">提示</h4>
             </div>
             <div class="modal-body">
-                您确定要删除角色数据吗？
+                您确定要删除用户数据吗？
             </div>
             <div class="modal-footer">
                 <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
-                <button class="btn btn-success" id="enterDeleteRole" type="button">确定</button>
+                <button class="btn btn-success" id="enterDeleteUser" type="button">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="updateUserPwdModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">修改密码</h4>
+            </div>
+            <div class="modal-body">
+                <form action="<c:url value="/user/update/pwd"/>" method="post" id="updateUserPwdForm" class="cmxform form-horizontal tasi-form" enctype="multipart/form-data">
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2" for="password">用户名</label>
+                        <div class="col-lg-10">
+                            <input type="password" name="password" id="password" class="form-control" placeholder="新密码" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="control-label col-lg-2" for="affirmPassword">登录名</label>
+                        <div class="col-lg-10">
+                            <input type="password" class="form-control" id="affirmPassword" name="affirmPassword" placeholder="确认密码" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" class="btn btn-default" type="button">取消</button>
+                <button class="btn btn-success" id="enterUpdateUserPwd" type="button">保存</button>
             </div>
         </div>
     </div>
@@ -169,27 +193,27 @@
 <c:import url="../fragment/footer.jsp"/>
 <script type="text/javascript">
     $(function(){
-        <%--function deleteRoleFun(roleIds){--%>
-            <%--$.ajax({--%>
-                <%--url:"<c:url value="/role/delete"/>",--%>
-                <%--type:"POST",--%>
-                <%--data:{roleIds:roleIds},--%>
-                <%--dataType:'json',--%>
-                <%--success:function(data,textStatus,jqXHR){--%>
-                    <%--if(data.status){--%>
-                        <%--toastr.success(data.message);--%>
-                        <%--setTimeout(function(){--%>
-                            <%--location.reload();--%>
-                        <%--},1000);--%>
-                        <%--return;--%>
-                    <%--}--%>
-                    <%--toastr.error(data.message);--%>
-                <%--},--%>
-                <%--error:function(jqXHR,textStatus,errorThrown){--%>
-                    <%--toastr.error("出错了："+errorThrown+" : "+textStatus);--%>
-                <%--}--%>
-            <%--});--%>
-        <%--}--%>
+        function deleteUserFun(userIds){
+            $.ajax({
+                url:"<c:url value="/user/delete"/>",
+                type:"POST",
+                data:{userIds:userIds},
+                dataType:'json',
+                success:function(data,textStatus,jqXHR){
+                    if(data.status){
+                        toastr.success(data.message);
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                        return;
+                    }
+                    toastr.error(data.message);
+                },
+                error:function(jqXHR,textStatus,errorThrown){
+                    toastr.error("出错了："+errorThrown+" : "+textStatus);
+                }
+            });
+        }
         v5Util.activeNav("systemManager","用户管理");
 
         $("#editUser").click(function(){
@@ -197,33 +221,68 @@
         });
         v5Util.searchOpt('userSearchForm','userSearch','deleteSearchTxt');
 
-        <%--//待删除的角色ID--%>
-        <%--var roleIds = "";--%>
-        <%--$(".delete-role").click(function(){--%>
-            <%--roleIds = $(this).data("roleid");--%>
-            <%--$('#deleteRoleModel').modal('show');--%>
-        <%--});--%>
-        <%--$("#enterDeleteRole").click(function(){--%>
-            <%--$('#deleteRoleModel').modal('hide');--%>
-            <%--if(roleIds !== ""){--%>
-                <%--deleteRoleFun(roleIds);--%>
-            <%--}--%>
-            <%--roleIds = "";--%>
-        <%--});--%>
-        <%--$("#batchRoleDelete").click(function(){--%>
-            <%--var $chs = $(".batch-checked-item:checked");--%>
-            <%--if($chs.length == 0){--%>
-                <%--toastr.warning("您没有选中要删除的数据！");--%>
-                <%--return;--%>
-            <%--}--%>
-            <%--var advIds = [];--%>
-            <%--for(var i=0;i<$chs.length;i++){--%>
-                <%--var v = $($chs[i]).val();--%>
-                <%--if(v == "on") continue;--%>
-                <%--advIds.push(v);--%>
-            <%--}--%>
-            <%--roleIds = advIds.join(",");--%>
-            <%--$('#deleteRoleModel').modal('show');--%>
-        <%--});--%>
+        <%--//待删除的用户ID--%>
+        var userIds = "";
+        $(".delete-user").click(function(){
+            userIds = $(this).data("userid");
+            $('#deleteUserModel').modal('show');
+        });
+        $("#enterDeleteUser").click(function(){
+            $('#deleteUserModel').modal('hide');
+            if(userIds !== ""){
+                deleteUserFun(userIds);
+            }
+            userIds = "";
+        });
+        $("#batchUserDelete").click(function(){
+            var $chs = $(".batch-checked-item:checked");
+            if($chs.length == 0){
+                toastr.warning("您没有选中要删除的数据！");
+                return;
+            }
+            var advIds = [];
+            for(var i=0;i<$chs.length;i++){
+                var v = $($chs[i]).val();
+                if(v == "on") continue;
+                advIds.push(v);
+            }
+            userIds = advIds.join(",");
+            $('#deleteUserModel').modal('show');
+        });
+        var userId = "";
+        $(".update-pwd-user").click(function(){
+            userId = $(this).data('userid');
+            $('#updateUserPwdModel').modal('show');
+        });
+        $("#enterUpdateUserPwd").click(function(){
+            $("#updateUserPwdForm").submit();
+        });
+        $("#updateUserPwdForm").validate({
+            submitHandler:function(form){
+                $(form).ajaxSubmit({
+                    dataType:'json',
+                    data:{userId:userId},
+                    type:"POST",
+                    success:function(responseText,statusText,xhr,element){
+                        $('#updateUserPwdModel').modal('hide');
+                        if(responseText.status === '1'){
+                            toastr.success(responseText.message);
+                            setTimeout(function(){
+                                location.href="<c:url value="/user/list/1"/>";
+                            },1000);
+                            return;
+                        }else if(responseText.status === '-1'){
+                            toastr.warning(responseText.message);
+                            return;
+                        }
+                        toastr.error(responseText.message);
+                    },
+                    error:function(xhr, status, error){
+                        $('#updateUserPwdModel').modal('hide');
+                        toastr.error("错误代码："+status+" 错误消息："+error);
+                    }
+                })
+            }
+        });
     })
 </script>

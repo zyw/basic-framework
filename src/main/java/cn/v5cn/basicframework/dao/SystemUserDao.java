@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface SystemUserDao {
     SystemUser findByUserName(String userName);
+    List<SystemUser> findByUserIds(Long[] userIds);
     int addSystemUser(SystemUser user);
     List<SystemUser> listUserByName(
             @Param("user")SystemUser user,
@@ -22,4 +23,10 @@ public interface SystemUserDao {
     int updateLoginCountAndTime(SystemUser user);
 
     SystemUser findUserById(Long userId);
+    int updateSystemUser(SystemUser user);
+    int batchDeleteSystemUser(Long[] userIds);
+    int updatePwd(
+            @Param("userId")Long userId,
+            @Param("pwd")String pwd,
+            @Param("salt")String salt);
 }

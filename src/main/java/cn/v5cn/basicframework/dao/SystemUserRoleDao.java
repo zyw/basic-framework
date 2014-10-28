@@ -11,4 +11,8 @@ import java.util.List;
 @Repository
 public interface SystemUserRoleDao {
     int addUserRoleBatch(List<SystemUserRole> urs);
+    List<SystemUserRole> findByUserId(Long userId);
+    int deleteByUserId(Long userId);
+    int batchDeleteByUserIds(Long[] userIds);
+    int batchDeleteByRoleIds(Long[] roleIds);
 }

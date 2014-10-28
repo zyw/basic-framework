@@ -4,6 +4,7 @@ import cn.v5cn.basicframework.entity.SystemUser;
 import cn.v5cn.basicframework.service.SystemUserService;
 import cn.v5cn.basicframework.util.HttpUtils;
 import cn.v5cn.basicframework.util.Pagination;
+import cn.v5cn.basicframework.util.PropertyUtils;
 import cn.v5cn.basicframework.util.SystemUtils;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static cn.v5cn.basicframework.util.MessageSourceHelper.getMessage;
 
@@ -69,7 +71,7 @@ public class UserAction {
     @ResponseBody
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ImmutableMap<String,String> userEdit(SystemUser user,Long[] roleIds,MultipartFile file,HttpServletRequest request){
-        if(!file.isEmpty()){
+        if(file != null && !file.isEmpty()){
             String realPath = HttpUtils.getRealPath(request, SystemUtils.AVATAR_PATH);
             SystemUtils.isNotExistCreate(realPath);
             String fileNameExt = SystemUtils.getFileNameExt(file.getOriginalFilename());
@@ -78,7 +80,6 @@ public class UserAction {
                 return ImmutableMap.of("status","-1","message",getMessage("user.uploadtypenonsupport.message"));
             }
             String timeFileName = SystemUtils.timeFileName(file.getOriginalFilename());
-            System.out.println(realPath + "++++" +timeFileName);
             try {
                 file.transferTo(new File(realPath+"/"+timeFileName));
                 user.setOriginalPic(timeFileName);
@@ -86,21 +87,74 @@ public class UserAction {
                 e.printStackTrace();
                 return ImmutableMap.of("status","0","message",getMessage("user.uploadfailed.message") + e.getMessage());
             }
-        }else{
+        }
+        //修改
+        if(user.getId() != null && user.getId() != 0){
+            SystemUser userById = systemUserService.findUserById(user.getId());
+            if(file != null && !file.isEmpty()){
+                deleteAvatar(userById.getOriginalPic(),request);
+            }
+            if(user.getOriginalPic() == null){
+                user.setOriginalPic(userById.getOriginalPic());
+            }
+            int result = systemUserService.updateSystemUserAndURS(user,roleIds);
+            if(result == 1){
+                return ImmutableMap.of("status","1","message",getMessage("user.updatesuccess.message"));
+            }
+            return ImmutableMap.of("status","0","message",getMessage("user.updatefailed.message"));
+        }
+        //新增
+        if(user.getOriginalPic() == null){
             if(user.getSex()==1){
-                user.setOriginalPic("avatar1.jpg");
+                user.setOriginalPic(PropertyUtils.getValue("default.avatar.man").or("avatar1.jpg"));
             }else {
-                user.setOriginalPic("avatar0.jpg");
+                user.setOriginalPic(PropertyUtils.getValue("default.avatar.woman").or("avatar0.jpg"));
             }
         }
-        System.out.println(roleIds.length + "===================");
-        System.out.println(roleIds[0] + "===================");
-        System.out.println(user+"+++++++++++++++++++");
-        System.out.println(user.getName()+"+++++++++++++++++++");
         int result = systemUserService.addSystemUserAndURS(user,roleIds);
         if(result == 1){
             return ImmutableMap.of("status","1","message",getMessage("user.addsuccess.message"));
         }
         return ImmutableMap.of("status","0","message",getMessage("user.addfailed.message"));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public ImmutableMap<String,String> userDelete(Long[] userIds,HttpServletRequest request){
+        if(userIds == null || userIds.length < 1)
+            return ImmutableMap.of("status","-1","message",getMessage("user.deletenodata.message"));
+
+        List<SystemUser> users = systemUserService.findByUserIds(userIds);
+        for(SystemUser user : users){
+            deleteAvatar(user.getOriginalPic(),request);
+        }
+        int result = systemUserService.batchDeleteSystemUser(userIds);
+        if(result == 1){
+            return ImmutableMap.of("status","1","message",getMessage("user.deletesuccess.message"));
+        }
+        return ImmutableMap.of("status","0","message",getMessage("user.deletefailed.message"));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update/pwd",method = RequestMethod.POST)
+    public ImmutableMap<String,String> updatePwd(Long userId,String password){
+        int result = systemUserService.updatePwd(userId,password);
+        if(result > 0){
+            return ImmutableMap.of("status","1","message",getMessage("user.updatepwdsuccess.message"));
+        }
+        return ImmutableMap.of("status","0","message",getMessage("user.updatepwdfailed.message"));
+    }
+
+    private boolean deleteAvatar(String originalPic,HttpServletRequest request){
+        String avatarMan = PropertyUtils.getValue("default.avatar.man").or("avatar1.jpg");
+        String avatarWoman = PropertyUtils.getValue("default.avatar.woman").or("avatar0.jpg");
+        if(originalPic != null
+                && !avatarMan.equals(originalPic)
+                && !avatarWoman.equals(originalPic)) {
+            String realPath = HttpUtils.getRealPath(request, SystemUtils.AVATAR_PATH);
+            File filel = new File(realPath + "/" + originalPic);
+            return filel.delete();
+        }
+        return false;
     }
 }

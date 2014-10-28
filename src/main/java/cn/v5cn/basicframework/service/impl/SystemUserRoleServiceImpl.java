@@ -21,4 +21,24 @@ public class SystemUserRoleServiceImpl implements SystemUserRoleService {
     public int addUserRoleBatch(List<SystemUserRole> urs) {
         return systemUserRoleDao.addUserRoleBatch(urs);
     }
+
+    @Override
+    public List<SystemUserRole> findByUserId(Long userId) {
+        return systemUserRoleDao.findByUserId(userId);
+    }
+
+    @Override
+    public int deleteByUserId(Long userId) {
+        return systemUserRoleDao.deleteByUserId(userId);
+    }
+
+    @Override
+    public int batchDeleteByUserIds(Long[] userIds) {
+        return systemUserRoleDao.batchDeleteByUserIds(userIds);
+    }
+
+    @Override
+    public int batchDeleteByRoleIds(Long[] roleIds) {
+        return systemUserRoleDao.batchDeleteByRoleIds(roleIds);
+    }
 }

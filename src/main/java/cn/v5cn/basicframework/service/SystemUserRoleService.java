@@ -9,4 +9,8 @@ import java.util.List;
  */
 public interface SystemUserRoleService {
     int addUserRoleBatch(List<SystemUserRole> urs);
+    List<SystemUserRole> findByUserId(Long userId);
+    int deleteByUserId(Long userId);
+    int batchDeleteByUserIds(Long[] userIds);
+    int batchDeleteByRoleIds(Long[] roleIds);
 }
