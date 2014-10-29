@@ -25,11 +25,13 @@
             <header class="panel-heading">
                 资源列表
                 <span class="tools pull-right">
-                    <button id="editRes" class="btn btn-success v5-panel-header-tool" type="button"
-                            data-toggle="tooltip" data-placement="top" title="添加一级资源">
-                        <i class="fa fa-plus"></i>
-                        添&nbsp;加
-                    </button>
+                    <shiro:hasPermission name="res:create">
+                        <button id="editRes" class="btn btn-success v5-panel-header-tool" type="button"
+                                data-toggle="tooltip" data-placement="top" title="添加一级资源">
+                            <i class="fa fa-plus"></i>
+                            添&nbsp;加
+                        </button>
+                    </shiro:hasPermission>
                 </span>
             </header>
             <div class="panel-body">
@@ -61,19 +63,25 @@
                                 </td>
                                 <td>
                                     <c:if test="${res.type ne 2}">
-                                        <a href="<c:url value="/res/edit/"/>${res.id}" data-toggle="tooltip"
-                                           data-placement="top" title="添加子资源" class="btn btn-success btn-xs">
-                                            <i class="fa fa-check"></i>
-                                        </a>
+                                        <shiro:hasPermission name="res:create">
+                                            <a href="<c:url value="/res/edit/"/>${res.id}" data-toggle="tooltip"
+                                               data-placement="top" title="添加子资源" class="btn btn-success btn-xs">
+                                                <i class="fa fa-check"></i>
+                                            </a>
+                                        </shiro:hasPermission>
                                     </c:if>
-                                    <a href="<c:url value="/res/edit/${res.id}/update"/>" class="btn btn-primary btn-xs"
-                                       data-toggle="tooltip" data-placement="top" title="修改资源">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a href="javascript:;" data-resid="${res.id}" class="btn btn-danger btn-xs delete-res"
-                                       data-toggle="tooltip" data-placement="top" title="删除资源">
-                                        <i class="fa fa-trash-o "></i>
-                                    </a>
+                                    <shiro:hasPermission name="res:update">
+                                        <a href="<c:url value="/res/edit/${res.id}/update"/>" class="btn btn-primary btn-xs"
+                                           data-toggle="tooltip" data-placement="top" title="修改资源">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                    </shiro:hasPermission>
+                                    <shiro:hasPermission name="res:delete">
+                                        <a href="javascript:;" data-resid="${res.id}" class="btn btn-danger btn-xs delete-res"
+                                           data-toggle="tooltip" data-placement="top" title="删除资源">
+                                            <i class="fa fa-trash-o "></i>
+                                        </a>
+                                    </shiro:hasPermission>
                                 </td>
                             </tr>
                         </c:forEach>

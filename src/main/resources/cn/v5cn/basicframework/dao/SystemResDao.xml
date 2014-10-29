@@ -20,6 +20,14 @@
             #{item}
         </foreach>
     </select>
+    <select id="findByPermissionsAndTypeAndPid" resultType="SystemRes">
+        select * from system_res where type=#{type} and pid=#{pid} and permission in
+        <foreach item="item" index="index" collection="permissions"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        order by sortNum asc
+    </select>
     <insert id="addSystemRes">
         insert into system_res(pid, name,type, url, permission, sortNum,pids,available,des)
         values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{pids},#{available},#{des})

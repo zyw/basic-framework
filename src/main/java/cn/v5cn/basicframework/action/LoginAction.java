@@ -26,7 +26,6 @@ public class LoginAction {
             error = "其他错误：" + exceptionClassName;
         }
         modelMap.addAttribute("error",error);
-        System.out.println(error + "+++++++++++++++++++++++++++++");
         return "login";
     }
 

@@ -291,7 +291,32 @@
     <div id="sidebar"  class="nav-collapse ">
         <!-- sidebar menu start-->
         <ul class="sidebar-menu" id="nav-accordion">
-            <li id="dashboard">
+            <c:forEach var="menu" items="${menus}">
+                <c:choose>
+                    <c:when test="${empty menu.children}">
+                        <li id="dashboard">
+                            <a href="<c:url value="${menu.url}"/>">
+                                <i class="fa fa-dashboard"></i>
+                                <span>${menu.name}</span>
+                            </a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="sub-menu" id="systemManager">
+                            <a href="javascript:;">
+                                <i class="fa fa-cogs"></i>
+                                <span>${menu.name}</span>
+                            </a>
+                            <ul class="sub">
+                                <c:forEach var="subMenu" items="${menu.children}">
+                                    <li><a  href="<c:url value="${subMenu.url}"/>">${subMenu.name}</a></li>
+                                </c:forEach>
+                            </ul>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+            <%--<li id="dashboard">
                 <a href="<c:url value="/"/>">
                     <i class="fa fa-dashboard"></i>
                     <span>仪表盘</span>
@@ -309,7 +334,7 @@
                     <li><a  href="<c:url value="/user/list/1"/>">用户管理</a></li>
                     <li><a  href="email_template.html" target="_blank">日志管理</a></li>
                 </ul>
-            </li>
+            </li>--%>
 
             <li class="sub-menu">
                 <a href="javascript:;">

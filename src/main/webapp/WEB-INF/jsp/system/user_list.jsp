@@ -26,16 +26,20 @@
             <header class="panel-heading">
                 用户列表
                 <span class="tools pull-right">
-                    <button id="editUser" class="btn btn-success v5-panel-header-tool" type="button"
-                            data-toggle="tooltip" data-placement="top" title="添加用户">
-                        <i class="fa fa-plus"></i>
-                        添&nbsp;加
-                    </button>
-                    <button id="batchUserDelete" class="btn btn-warning v5-panel-header-tool" type="button"
-                            data-toggle="tooltip" data-placement="top" title="批量删除">
-                        <i class="fa fa-times-circle"></i>
-                        批量删除
-                    </button>
+                    <shiro:hasPermission name="usr:create">
+                        <button id="editUser" class="btn btn-success v5-panel-header-tool" type="button"
+                                data-toggle="tooltip" data-placement="top" title="添加用户">
+                            <i class="fa fa-plus"></i>
+                            添&nbsp;加
+                        </button>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="user:delete">
+                        <button id="batchUserDelete" class="btn btn-warning v5-panel-header-tool" type="button"
+                                data-toggle="tooltip" data-placement="top" title="批量删除">
+                            <i class="fa fa-times-circle"></i>
+                            批量删除
+                        </button>
+                    </shiro:hasPermission>
                 </span>
             </header>
             <div class="panel-body">
@@ -127,12 +131,18 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <a href="<c:url value="/user/edit/${user.id}"/>" data-toggle="tooltip" data-placement="top"
-                                   title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                <a href="javascript:;" data-userid="${user.id}" data-toggle="tooltip" data-placement="top"
-                                   title="删除" class="btn btn-danger btn-xs delete-user"><i class="fa fa-trash-o "></i></a>
-                                <a href="javascript:;" data-userid="${user.id}" class="btn btn-success btn-xs update-pwd-user" data-toggle="tooltip" data-placement="top"
-                                   title="修改密码"><i class="fa fa-edit"></i></a>
+                                <shiro:hasPermission name="user:update">
+                                    <a href="<c:url value="/user/edit/${user.id}"/>" data-toggle="tooltip" data-placement="top"
+                                       title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="user:delete">
+                                    <a href="javascript:;" data-userid="${user.id}" data-toggle="tooltip" data-placement="top"
+                                       title="删除" class="btn btn-danger btn-xs delete-user"><i class="fa fa-trash-o "></i></a>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="user:pwd:update">
+                                    <a href="javascript:;" data-userid="${user.id}" class="btn btn-success btn-xs update-pwd-user" data-toggle="tooltip" data-placement="top"
+                                       title="修改密码"><i class="fa fa-edit"></i></a>
+                                </shiro:hasPermission>
                             </td>
                         </tr>
                     </c:forEach>

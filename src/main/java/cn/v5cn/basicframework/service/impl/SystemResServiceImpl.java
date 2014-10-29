@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by ZYW on 2014/10/15.
@@ -90,5 +91,25 @@ public class SystemResServiceImpl implements SystemResService {
     @Override
     public List<SystemRes> findByResIds(List<Long> resIds) {
         return systemResDao.findByResIds(resIds);
+    }
+
+    @Override
+    public List<SystemRes> findByPermissionsAndType(Set<String> permissions, Integer type) {
+        List<SystemRes> parent = systemResDao.findByPermissionsAndTypeAndPid(permissions, type,0L);
+        List<SystemRes> subNodes = null;
+        List<SystemRes> subNextNodes = null;
+        for(SystemRes res : parent){
+            subNodes = systemResDao.findByPermissionsAndTypeAndPid(permissions, type,res.getId());
+            if(subNodes != null && subNodes.size() > 0){
+                res.setChildren(subNodes);
+                for(SystemRes sub : subNodes){
+                    subNextNodes = systemResDao.findByPermissionsAndTypeAndPid(permissions, type,sub.getId());
+                    if(subNextNodes != null && subNextNodes.size() > 0)
+                        sub.setChildren(subNextNodes);
+                }
+            }
+        }
+
+        return parent;
     }
 }

@@ -25,16 +25,20 @@
             <header class="panel-heading">
                 角色列表
                 <span class="tools pull-right">
-                    <button id="editRole" class="btn btn-success v5-panel-header-tool" type="button"
-                            data-toggle="tooltip" data-placement="top" title="添加角色">
-                        <i class="fa fa-plus"></i>
-                        添&nbsp;加
-                    </button>
-                    <button id="batchRoleDelete" class="btn btn-warning v5-panel-header-tool" type="button"
-                            data-toggle="tooltip" data-placement="top" title="批量删除">
-                        <i class="fa fa-times-circle"></i>
-                        批量删除
-                    </button>
+                    <shiro:hasPermission name="role:create">
+                        <button id="editRole" class="btn btn-success v5-panel-header-tool" type="button"
+                                data-toggle="tooltip" data-placement="top" title="添加角色">
+                            <i class="fa fa-plus"></i>
+                            添&nbsp;加
+                        </button>
+                    </shiro:hasPermission>
+                    <shiro:hasPermission name="role:delete">
+                        <button id="batchRoleDelete" class="btn btn-warning v5-panel-header-tool" type="button"
+                                data-toggle="tooltip" data-placement="top" title="批量删除">
+                            <i class="fa fa-times-circle"></i>
+                            批量删除
+                        </button>
+                    </shiro:hasPermission>
                 </span>
             </header>
             <div class="panel-body">
@@ -92,10 +96,14 @@
                             </td>
                             <td>
                                 <%--<button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>--%>
-                                <a href="<c:url value="/role/edit/${role.id}"/>" data-toggle="tooltip" data-placement="top"
-                                   title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
-                                <a href="javascript:;" data-roleid="${role.id}" data-toggle="tooltip" data-placement="top"
-                                   title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>
+                                <shiro:hasPermission name="role:update">
+                                    <a href="<c:url value="/role/edit/${role.id}"/>" data-toggle="tooltip" data-placement="top"
+                                       title="修改" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
+                                </shiro:hasPermission>
+                                <shiro:hasPermission name="role:delete">
+                                    <a href="javascript:;" data-roleid="${role.id}" data-toggle="tooltip" data-placement="top"
+                                       title="删除" class="btn btn-danger btn-xs delete-role"><i class="fa fa-trash-o "></i></a>
+                                </shiro:hasPermission>
                             </td>
                         </tr>
                     </c:forEach>

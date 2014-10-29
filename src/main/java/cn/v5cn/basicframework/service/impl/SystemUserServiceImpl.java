@@ -190,18 +190,26 @@ public class SystemUserServiceImpl implements SystemUserService {
         SystemUser user = this.findByUserName(userName);
         if(user == null)
             return Collections.EMPTY_SET;
-        List<SystemUserRole> usreRoles = systemUserRoleService.findByUserId(user.getId());
+        List<SystemUserRole> userRoles = systemUserRoleService.findByUserId(user.getId());
+
+        if(userRoles == null || userRoles.size() < 1) return Collections.EMPTY_SET;
 
         List<Long> roleIds = Lists.newArrayList();
-        for(SystemUserRole userRole : usreRoles){
+        for(SystemUserRole userRole : userRoles){
             roleIds.add(userRole.getRole_id());
         }
         List<SystemRoleRes> roleReses = systemRoleResService.findByRoleIds(roleIds);
+
+        if(roleReses == null || roleReses.size() < 1) return Collections.EMPTY_SET;
+
         List<Long> resIds = Lists.newArrayList();
         for(SystemRoleRes roleRes : roleReses){
             resIds.add(roleRes.getRes_id());
         }
         List<SystemRes> reses = systemResService.findByResIds(resIds);
+
+        if(reses == null || reses.size() < 1) return Collections.EMPTY_SET;
+
         Set<String> result = Sets.newHashSet();
         for(SystemRes res : reses){
             result.add(res.getPermission());
