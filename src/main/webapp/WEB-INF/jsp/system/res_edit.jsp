@@ -44,16 +44,16 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="control-label col-lg-2" for="rurl">URL</label>
+                            <label class="control-label col-lg-2" for="permission">权限字符串</label>
                             <div class="col-lg-10">
-                                <input type="text" name="url" id="rurl" class="form-control" placeholder='请以"/"开头' value="${res.url}">
+                                <input type="text" name="permission" id="permission" class="form-control" placeholder="例如：res:*" value="${res.permission}" required>
+                                <span class="help-block">以资源为例 res:* 全部权限 res:view，res:create，res:update，res:delete</span>
                             </div>
                         </div>
                         <div class="form-group ">
-                            <label class="control-label col-lg-2" for="permission">权限字符串</label>
+                            <label class="control-label col-lg-2" for="rurl">URL</label>
                             <div class="col-lg-10">
-                                <input type="text" name="permission" id="permission" class="form-control" placeholder="例如：res:*" value="${res.permission}">
-                                <span class="help-block">以资源为例 res:* 全部权限 res:view，res:create，res:update，res:delete</span>
+                                <input type="text" name="url" id="rurl" class="form-control" placeholder='请以"/"开头' value="${res.url}">
                             </div>
                         </div>
                         <div class="form-group ">

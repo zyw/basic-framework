@@ -5,9 +5,10 @@ CREATE TABLE system_res (
    permission VARCHAR(100),
   url VARCHAR(255) DEFAULT NULL,
   sortNum INT(11) DEFAULT '1',		/*排序*/
+  icon varchar(100)       comment '菜单图片',
   pids varchar(100)       comment 'TreeTable排序',
   TYPE INT(1) DEFAULT '2' COMMENT '1 菜单 2 按钮',
-   available INT DEFAULT 1 COMMENT '1 可用 0 不可用',
+  available INT DEFAULT 1 COMMENT '1 可用 0 不可用',
   des VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE=INNODB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8;

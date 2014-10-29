@@ -26,7 +26,7 @@
             <header class="panel-heading">
                 用户列表
                 <span class="tools pull-right">
-                    <shiro:hasPermission name="usr:create">
+                    <shiro:hasPermission name="user:create">
                         <button id="editUser" class="btn btn-success v5-panel-header-tool" type="button"
                                 data-toggle="tooltip" data-placement="top" title="添加用户">
                             <i class="fa fa-plus"></i>
@@ -69,7 +69,7 @@
                         <col class="col-xs-1">
                         <col class="col-xs-2">
                         <col class="col-xs-1">
-                        <col class="col-xs-1">
+                        <col class="col-xs-2">
                     </colgroup>
                     <thead>
                     <tr>

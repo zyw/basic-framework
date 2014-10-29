@@ -29,8 +29,8 @@ public class LoginAction {
         return "login";
     }
 
-    /*@RequestMapping(value = {"/login"},method = RequestMethod.POST)
-    public String loginPost(){
-        return "redirect:/index";
-    }*/
+    @RequestMapping(value = "/unauthorized")
+    public String unauthorized(){
+        return "unauthorized";
+    }
 }

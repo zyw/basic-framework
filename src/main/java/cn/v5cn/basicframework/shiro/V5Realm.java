@@ -26,6 +26,7 @@ public class V5Realm extends AuthorizingRealm {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         //设置权限
         authorizationInfo.setRoles(systemUserService.findRoles(userName));
+        System.out.println(systemUserService.findPermissions(userName)+"+++++++++++");
         authorizationInfo.setStringPermissions(systemUserService.findPermissions(userName));
 
         return authorizationInfo;

@@ -13,6 +13,7 @@ public class SystemRes implements Serializable {
     private String permission;
     private String url;
     private Integer sortNum;        /*排序*/
+    private String icon;
     private String pids;            /*TreeTable排序*/
     private Integer type;       //1 菜单 2 按钮
     private Integer available;  //1 可用 0 不可用
@@ -68,6 +69,14 @@ public class SystemRes implements Serializable {
 
     public void setSortNum(Integer sortNum) {
         this.sortNum = sortNum;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getPids() {
@@ -131,6 +140,7 @@ public class SystemRes implements Serializable {
                 ", permission='" + permission + '\'' +
                 ", url='" + url + '\'' +
                 ", sortNum=" + sortNum +
+                ", icon=" + icon +
                 ", pids=" + pids +
                 ", type=" + type +
                 ", available=" + available +

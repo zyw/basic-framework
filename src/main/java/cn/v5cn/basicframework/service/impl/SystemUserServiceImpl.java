@@ -212,6 +212,7 @@ public class SystemUserServiceImpl implements SystemUserService {
 
         Set<String> result = Sets.newHashSet();
         for(SystemRes res : reses){
+            if(res.getPermission() == null || "".equals(res.getPermission().trim())) continue;
             result.add(res.getPermission());
         }
         return result;

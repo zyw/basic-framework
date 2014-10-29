@@ -29,12 +29,12 @@
         order by sortNum asc
     </select>
     <insert id="addSystemRes">
-        insert into system_res(pid, name,type, url, permission, sortNum,pids,available,des)
-        values(#{pid},#{name},#{type},#{url},#{permission},#{sortNum},#{pids},#{available},#{des})
+        insert into system_res(pid, name,type, url, permission,icon,sortNum,pids,available,des)
+        values(#{pid},#{name},#{type},#{url},#{permission},#{icon},#{sortNum},#{pids},#{available},#{des})
     </insert>
     <update id="updateSystemRes">
         update system_res set name=#{name},type=#{type},url=#{url},
-        permission=#{permission},sortNum=#{sortNum},available=#{available},des=#{des}
+        permission=#{permission},icon=#{icon},sortNum=#{sortNum},available=#{available},des=#{des}
         where id=#{id}
     </update>
     <delete id="deleteSystemRes">
