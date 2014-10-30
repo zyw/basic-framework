@@ -20,7 +20,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <%--<link rel="shortcut icon" href="img/favicon.html">--%>
 
-    <title>登录</title>
+    <title>V5基本框架 | 登录</title>
     <!-- Bootstrap core CSS -->
     <link href="<c:url value="/r/css/bootstrap.min.css"/>" rel="stylesheet">
     <link href="<c:url value="/r/css/bootstrap-reset.css"/>" rel="stylesheet">
