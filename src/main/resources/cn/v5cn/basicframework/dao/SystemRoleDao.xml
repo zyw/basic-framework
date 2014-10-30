@@ -28,7 +28,7 @@
         </foreach>
     </select>
     <select id="findAll" resultType="SystemRole">
-        select * from system_role
+        select * from system_role where available=1
     </select>
      <insert id="addSystemRole" useGeneratedKeys="true" keyProperty="id">
          insert into system_role(name, sortNum, available, des)

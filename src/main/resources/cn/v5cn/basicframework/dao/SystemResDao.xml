@@ -11,7 +11,7 @@
         select * from system_res order by concat(pids,id) asc
     </select>
     <select id="findByPid" resultType="SystemRes">
-        select * from system_res where pid=#{pid} order by concat(pids,id) asc
+        select * from system_res where available=1 and pid=#{pid} order by concat(pids,id) asc
     </select>
     <select id="findByResIds" resultType="SystemRes">
         select * from system_res where id in

@@ -8,6 +8,7 @@ import cn.v5cn.basicframework.util.PropertyUtils;
 import cn.v5cn.basicframework.util.SystemUtils;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,6 +36,7 @@ public class UserAction {
     @Autowired
     private SystemUserService systemUserService;
 
+    @RequiresPermissions("user:view")
     @RequestMapping(value = "/list/{p}",method = {RequestMethod.POST,RequestMethod.GET})
     public String userList(SystemUser user,@PathVariable Integer p,HttpSession session,HttpServletRequest request,ModelMap modelMap){
         if(user != null && !StringUtils.isBlank(user.getName())){
@@ -55,6 +57,7 @@ public class UserAction {
         return "system/user_list";
     }
 
+    @RequiresPermissions({"user:create","user:update"})
     @RequestMapping(value = "/edit/{userId}",method = RequestMethod.GET)
     public String userEdit(@PathVariable Long userId,ModelMap modelMap){
         if(userId == null || userId == 0){
@@ -69,6 +72,7 @@ public class UserAction {
     }
 
     @ResponseBody
+    @RequiresPermissions({"user:create","user:update"})
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ImmutableMap<String,String> userEdit(SystemUser user,Long[] roleIds,MultipartFile file,HttpServletRequest request){
         if(file != null && !file.isEmpty()){
@@ -119,6 +123,7 @@ public class UserAction {
     }
 
     @ResponseBody
+    @RequiresPermissions({"user:delete"})
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public ImmutableMap<String,String> userDelete(Long[] userIds,HttpServletRequest request){
         if(userIds == null || userIds.length < 1)
@@ -136,6 +141,7 @@ public class UserAction {
     }
 
     @ResponseBody
+    @RequiresPermissions({"user:pwd:update"})
     @RequestMapping(value = "/update/pwd",method = RequestMethod.POST)
     public ImmutableMap<String,String> updatePwd(Long userId,String password){
         int result = systemUserService.updatePwd(userId,password);

@@ -8,6 +8,7 @@ import cn.v5cn.basicframework.util.SystemUtils;
 import cn.v5cn.basicframework.util.TupleTwo;
 import com.google.common.collect.ImmutableMap;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +32,7 @@ public class RoleAction {
     @Autowired
     private SystemRoleService systemRoleService;
 
+    @RequiresPermissions("role:view")
     @RequestMapping(value = "/list/{p}",method = {RequestMethod.GET,RequestMethod.POST})
     public String roleList(SystemRole role,@PathVariable Integer p,HttpSession session,HttpServletRequest request,ModelMap modelMap){
         if(role != null && !StringUtils.isBlank(role.getName())){
@@ -51,6 +53,7 @@ public class RoleAction {
         return "system/role_list";
     }
 
+    @RequiresPermissions({"role:create","role:update"})
     @RequestMapping(value = "/edit/{roleId}",method = RequestMethod.GET)
     public String roleEdit(@PathVariable Long roleId,ModelMap modelMap){
         if(roleId == 0)
@@ -64,6 +67,7 @@ public class RoleAction {
     }
 
     @ResponseBody
+    @RequiresPermissions({"role:create","role:update"})
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
     public ImmutableMap<String,String> roleEdit(SystemRole systemRole,String resIds){
         if(systemRole.getId() == null){
@@ -81,6 +85,7 @@ public class RoleAction {
     }
 
     @ResponseBody
+    @RequiresPermissions("role:delete")
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public ImmutableMap<String,String> deleteRoles(Long[] roleIds){
         if(roleIds == null || roleIds.length < 1)

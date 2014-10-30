@@ -4,6 +4,7 @@ import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.service.SystemResService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +27,7 @@ public class ResourceAction {
     @Autowired
     private SystemResService systemResService;
 
+    @RequiresPermissions("res:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String resList(ModelMap modelMap) {
         List<SystemRes> reses = systemResService.findAll();
@@ -33,6 +35,7 @@ public class ResourceAction {
         return "system/res_list";
     }
 
+    @RequiresPermissions({"res:create","res:update"})
     @RequestMapping(value = "/edit/{resId}", method = RequestMethod.GET)
     public String resEdit(@PathVariable Long resId, ModelMap modelMap) {
         SystemRes systemRes = new SystemRes();
@@ -50,6 +53,7 @@ public class ResourceAction {
         return "system/res_edit";
     }
 
+    @RequiresPermissions("res:update")
     @RequestMapping(value = "/edit/{resId}/update", method = RequestMethod.GET)
     public String resEditUpdate(@PathVariable Long resId, ModelMap modelMap) {
         SystemRes res = systemResService.findById(resId);
@@ -63,6 +67,7 @@ public class ResourceAction {
     }
 
     @ResponseBody
+    @RequiresPermissions("res:create")
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ImmutableMap<String, String> resEdit(SystemRes systemRes) {
         if (systemRes.getId() != null) {
@@ -80,6 +85,7 @@ public class ResourceAction {
     }
 
     @ResponseBody
+    @RequiresPermissions("res:delete")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public ImmutableMap<String, String> resDelete(Long resId) {
         int count = systemResService.findByPidCount(resId);
