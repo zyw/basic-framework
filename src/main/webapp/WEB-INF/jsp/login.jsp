@@ -47,6 +47,8 @@
         <div class="login-wrap">
             <input type="text" class="form-control" name="loginname" value="<shiro:principal/>" placeholder="用户名" autofocus>
             <input type="password" class="form-control" name="password" placeholder="密码">
+            <input type="text" class="form-control" name="jcaptchaCode" placeholder="验证码">
+            <img src="<c:url value="/captcha"/>" class="form-control" width="50">
             <label class="checkbox">
                 <input type="checkbox" value="remember-me" name="rememberMe"> 记住密码
                 <span class="pull-right">
