@@ -64,6 +64,13 @@
                             </div>
                         </div>
                         <div class="form-group ">
+                            <label class="control-label col-lg-2" for="icon">图标</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="icon" id="icon" class="form-control" placeholder="图标" value="${res.icon}">
+                                <span class="help-block">填写图标的CSS。</span>
+                            </div>
+                        </div>
+                        <div class="form-group ">
                             <label class="control-label col-lg-2" for="rtype">类型</label>
                             <div class="col-lg-10">
                                 <select class="form-control m-bot15" name="type" id="rtype">

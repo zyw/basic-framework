@@ -114,7 +114,7 @@
 
         v5Util.activeNav("systemManager","资源管理");
 
-        $("#example-basic").treetable({ expandable: true });
+        $("#example-basic").treetable({ expandable: true,initialState:'expanded' });
         $("#editRes").click(function(){
             location.href="<c:url value="/res/edit/0"/>";
         });
