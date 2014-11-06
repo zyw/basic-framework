@@ -1,5 +1,6 @@
 package cn.v5cn.basicframework.service;
 
+import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.entity.SystemUser;
 import cn.v5cn.basicframework.util.Pagination;
 
@@ -31,4 +32,5 @@ public interface SystemUserService {
     //查询权限信息
     Set<String> findRoles(String userName);
     Set<String> findPermissions(String userName);
+    List<SystemRes> findMenuByUserName();
 }

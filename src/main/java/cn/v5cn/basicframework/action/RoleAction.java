@@ -1,7 +1,9 @@
 package cn.v5cn.basicframework.action;
 
+import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.entity.SystemRole;
 import cn.v5cn.basicframework.service.SystemRoleService;
+import cn.v5cn.basicframework.service.SystemUserService;
 import cn.v5cn.basicframework.util.HttpUtils;
 import cn.v5cn.basicframework.util.Pagination;
 import cn.v5cn.basicframework.util.SystemUtils;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
 import static cn.v5cn.basicframework.util.MessageSourceHelper.getMessage;
 
 /**
@@ -31,6 +35,9 @@ public class RoleAction {
 
     @Autowired
     private SystemRoleService systemRoleService;
+
+    @Autowired
+    private SystemUserService systemUserService;
 
     @RequiresPermissions("role:view")
     @RequestMapping(value = "/list/{p}",method = {RequestMethod.GET,RequestMethod.POST})
@@ -69,16 +76,19 @@ public class RoleAction {
     @ResponseBody
     @RequiresPermissions({"role:create","role:update"})
     @RequestMapping(value = "/edit",method = RequestMethod.POST)
-    public ImmutableMap<String,String> roleEdit(SystemRole systemRole,String resIds){
+    public ImmutableMap<String,String> roleEdit(SystemRole systemRole,String resIds,HttpSession session){
         if(systemRole.getId() == null){
             int result = systemRoleService.addSystemRoleAndRRS(systemRole, resIds);
-            if(result != 0)
+            if(result != 0){
+                refreshSessionMenu(session);
                 return ImmutableMap.of("status","1","message",getMessage("role.addsuccess.message"));
+            }
 
             return ImmutableMap.of("status","0","message",getMessage("role.addfailed.message"));
         }
         int result = systemRoleService.updateSystemRoleAndRRS(systemRole,resIds);
         if(result != 0){
+            refreshSessionMenu(session);
             return ImmutableMap.of("status","1","message",getMessage("role.updatesuccess.message"));
         }
         return ImmutableMap.of("status","0","message",getMessage("role.updatefailed.message"));
@@ -94,5 +104,10 @@ public class RoleAction {
         if(result != 0)
             return ImmutableMap.of("status","1","message",getMessage("role.deletesuccess.message"));
         return ImmutableMap.of("status","0","message",getMessage("role.deletefailed.message"));
+    }
+
+    private void refreshSessionMenu(HttpSession session){
+        List<SystemRes> systemReses = systemUserService.findMenuByUserName();
+        session.setAttribute("menus",systemReses);
     }
 }

@@ -2,6 +2,7 @@ package cn.v5cn.basicframework.action;
 
 import cn.v5cn.basicframework.entity.SystemRes;
 import cn.v5cn.basicframework.service.SystemResService;
+import cn.v5cn.basicframework.service.SystemUserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.ImmutableMap;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static cn.v5cn.basicframework.util.MessageSourceHelper.getMessage;
@@ -26,6 +28,9 @@ public class ResourceAction {
 
     @Autowired
     private SystemResService systemResService;
+
+    @Autowired
+    private SystemUserService systemUserService;
 
     @RequiresPermissions("res:view")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -69,10 +74,11 @@ public class ResourceAction {
     @ResponseBody
     @RequiresPermissions("res:create")
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ImmutableMap<String, String> resEdit(SystemRes systemRes) {
+    public ImmutableMap<String, String> resEdit(SystemRes systemRes,HttpSession session) {
         if (systemRes.getId() != null) {
             int result = systemResService.updateSystemRes(systemRes);
             if (result < 1) {
+                session.setAttribute("menus",systemUserService.findMenuByUserName());
                 return ImmutableMap.of("status", "0", "message", getMessage("resource.updatefailed.message"));
             }
             return ImmutableMap.of("status", "1", "message", getMessage("resource.updatesuccess.message"));
@@ -87,15 +93,16 @@ public class ResourceAction {
     @ResponseBody
     @RequiresPermissions("res:delete")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public ImmutableMap<String, String> resDelete(Long resId) {
+    public ImmutableMap<String, String> resDelete(Long resId,HttpSession session) {
         int count = systemResService.findByPidCount(resId);
         if (count > 0) {
-            return ImmutableMap.of("status", "0", "message", getMessage("resource.count.message"));
+            return ImmutableMap.of("status", "-1", "message", getMessage("resource.count.message"));
         }
         int result = systemResService.deleteSystemRes(resId);
         if (result < 1) {
             return ImmutableMap.of("status", "0", "message", getMessage("resource.deletefailed.message"));
         }
+        session.setAttribute("menus",systemUserService.findMenuByUserName());
         return ImmutableMap.of("status", "1", "message", getMessage("resource.deletesuccess.message"));
     }
 

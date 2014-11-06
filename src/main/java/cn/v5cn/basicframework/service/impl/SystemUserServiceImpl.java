@@ -10,6 +10,8 @@ import cn.v5cn.basicframework.util.TupleTwo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -216,5 +218,17 @@ public class SystemUserServiceImpl implements SystemUserService {
             result.add(res.getPermission());
         }
         return result;
+    }
+
+    @Override
+    public List<SystemRes> findMenuByUserName() {
+        String userName = (String) SecurityUtils.getSubject().getPrincipal();
+        Set<String> permissions = findPermissions(userName);
+        if(permissions == null || permissions.size() < 1){
+            SecurityUtils.getSubject().logout();
+            throw new UnauthorizedException();
+        }
+        List<SystemRes> systemReses = systemResService.findByPermissionsAndType(permissions, 1);
+        return systemReses;
     }
 }
