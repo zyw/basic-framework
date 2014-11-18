@@ -119,7 +119,7 @@
                             </td>
                             <td>${user.mobilephone}</td>
                             <td>${user.loginCount}</td>
-                            <td><fmt:formatDate value="${user.lastLoginTime}" pattern="YYYY-MM-dd HH:mm:ss"/></td>
+                            <td><fmt:formatDate value="${user.lastLoginTime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
                             <td>
                                 <c:choose>
                                     <c:when test="${user.available eq 1}">
